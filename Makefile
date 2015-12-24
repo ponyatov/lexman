@@ -1,5 +1,6 @@
-TEX = lexman.tex header.tex
+TEX = lexman.tex header.tex bib.tex
 TEX += intro.tex
+TEX += soft.tex
 
 .PHONY: pdf
 pdf: lexman.pdf
