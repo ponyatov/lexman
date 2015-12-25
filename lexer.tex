@@ -4,14 +4,59 @@
 
 \secrel{Примеры самостоятельного применения}\secdown
 
-Лексер может быть использован как самостоятельный инструмент, если
+\begin{framed}
+\noindent Лексер может быть использован как самостоятельный инструмент, если
 не требуется анализ синтаксиса, и достаточно выполнять заданный \cpp\ код
 при срабатывании одного из регулярных выражений.
+\end{framed}
 
-\secrel{Загрузка файла числовых данных}
+\secrel{\file{Pij2D}: загрузка файла числовых данных}
 
+Формат файла: \bigskip
+
+\begin{itemize}[nosep]
+\item число строк матрицы max=Rmax
+\item число элементов в строке max=Xmax
+\item данные построчно
+\end{itemize}
+
+\lstx{Fi.dat}{tmp/Fi.txt}
 \lstx{Pij2D.lpp}{../pij/pij2d/lpp.lpp}
 \lst{hpp.hpp}{../pij/pij2d/hpp.hpp}{c++}
+
+\begin{lstlisting}[language=c++]
+int main (int argc, char *argv[]) {
+        // command line processing
+        assert (argc==4+1);     // pij.exe [V] [Qm] [Alpha]
+        V     = atof(argv[1]); assert(V    >0); cout << "V:\t\t\t" << V << "\n";
+        Qm    = atof(argv[2]); assert(Qm   >0); cout << "Qm:\t\t\t" << Qm << "\n";
+        Alpha = atof(argv[3]); assert(Alpha>0); cout << "Alpha:\t\t" << Alpha << "\n";
+        r         = atof(argv[4])/1000; assert(r    >0); cout << "r:\t\t\t" << r << "\n";
+        // Fi.txt fielf data parsing
+        while (yylex());        // Fi.txt parser loop from stdin
+        // compute tracks
+        return doit();
+}
+\end{lstlisting}
+
+\begin{verbatim}
+Rmax 					// строк, не более чем 
+Xmax 					// столбцов, не более чем
+double Fi[Rmax][Xmax]	// массив под данные
+int item				// общий счетчик прочитанных чисел
+
+argc, argv				// часть исходных данных задается с командной строки
+doit()					// функция обработки данных
+
+while (yylex());		// цикл опроса лексера,
+yylex()					// на каждый вызов возвращается один токен
+\end{verbatim}
+
+\verb|item|\ используется для определения, какой тип имеет текущее 
+прочитанное число: \verb|Rlimit|, \verb|Xlimit| или данные.
+
+Конец строки в обработке не участвует, факт перехода на следующую строку
+матрицы определяется по превышению Xlimit.
 
 \secup
 \secup

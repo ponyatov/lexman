@@ -24,3 +24,9 @@ $(MK): lst/Makefile lst/mk.lpp script/Makefile
 	
 fig/%.png: fig/%.dot
 	dot -Tpng -o $@ $<	
+
+lexer.tex: tmp/Fi.txt	
+tmp/Fi.txt: ../pij/pij2d/Fi.txt
+	head -n5 $< > $@
+	echo "\n...\n" >> $@
+	tail -n5 $< >> $@
