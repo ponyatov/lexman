@@ -1,6 +1,6 @@
-../tmp/mk.head: ./mk ../script/Makefile
-	./mk < ../script/Makefile
-./mk: mk.cpp
+../tmp/mk.head: ./mk1$(EXE) ../script/Makefile
+	./mk1$(EXE) < ../script/Makefile
+./%$(EXE): %.cpp
 	$(CXX) -o $@ $<
-mk.cpp: mk.lpp
+%.cpp: %.lpp Makefile
 	flex -o $@ $<

@@ -1,0 +1,21 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream head("../tmp/mk.head");
+ofstream module("../tmp/mk.module");
+ofstream exec("../tmp/mk.exec");
+ofstream clean("../tmp/mk.clean");
+ofstream cpp("../tmp/mk.cpp");
+%}
+%option main
+%%
+^[# ]*(EXE|RES|TAIL).+\n	{ head<<yytext; }
+^MODULE[ =]+.+\n			{ module<<yytext; }
+^.*(exec|tail).*\n			{ exec<<yytext; }
+^.*(clean|rm\ -rf).*\n		{ clean<<yytext; }
+^(C|H)[ =]+.+\n				{ cpp<<yytext; }
+^[# ]*CXX.+\n				{ cpp<<yytext; }
+^.+\(C\).+\n				{ cpp<<yytext; }
+\n	{}
+.	{}
+%%

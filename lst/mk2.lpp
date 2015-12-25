@@ -1,0 +1,18 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream ypp("../tmp/mk.ypp");
+ofstream lpp("../tmp/mk.lpp");
+ofstream res("../tmp/mk.res");
+%}
+%option main
+%%
+^ypp.+\n				{ ypp<<yytext; }
+^\tbison.+\n			{ ypp<<yytext; }
+^lex.+\n				{ lpp<<yytext; }
+^\tflex.+\n				{ lpp<<yytext; }
+^res.+\n				{ res<<yytext; }
+^\twindres.+\n			{ res<<yytext; }
+\n	{}
+.	{}
+%%

@@ -1,5 +1,6 @@
 *.cpp
-mk
+mk?
+mk*.exe
 ypp
 lpp
 hpp

@@ -4,7 +4,7 @@
 MODULE = $(notdir $(CURDIR))
 .PHONY: exec
 exec: ./$(MODULE)$(EXE)
-	./$(MODULE)$(EXE) < $(MODULE).bI > $(MODULE).blog && tail $(TAIL) $(MODULE).blog
+	./$(MODULE)$(EXE) < $(MODULE).$(MODULE) > $(MODULE).log && tail $(TAIL) $(MODULE).blog
 .PHONY: clean	
 clean:
 	rm -rf *~ .*~ *.exe *.elf *.*log ypp.tab.?pp lex.yy.c $(RES)
