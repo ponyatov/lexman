@@ -1,0 +1,16 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream head("../tmp/mk.head");
+ofstream module("../tmp/mk.module");
+ofstream exec("../tmp/mk.exec");
+%}
+%option main
+%%
+.*(TAIL|EXE|RES).*=.+\n	{ head<<yytext; }
+.*MODULE.*=.+\n			{ module<<yytext; }
+^exec.+MODULE.+\n		{ exec<<yytext; }
+.*MODULE.*log.*\n		{ exec<<yytext; }
+\n	{}
+.	{}
+%%

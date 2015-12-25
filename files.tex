@@ -1,0 +1,22 @@
+\secrel{Типичная структура проекта}\secdown
+
+\begin{tabular}{l l l l}
+README.md &\ref{readme}& github & описание проекта на \url{https://github.com/} \\
+Makefile &\ref{makefile}& make & зависимости между файлами и команды сборки \\
+lpp.lpp && flex & лексер \ref{lexer}\\
+ypp.ypp && bison & парсер \ref{parser}\\
+hpp.hpp && g++/clang++ & заголовочные файлы \cpp \\
+cpp.cpp && g++/clang++ & \cpp-код: ядро интерпретатора, компилятор,\\&&&
+реализация динамических типов, пользовательский код \\
+bat.bat && win32 & запускалка gvim\\
+rc.rc && windres & описание ресурсов: иконки приложения, меню,..\\
+logo.ico && windres & логотип в .ico формате \\
+logo.png &&& логотип в .png (для github README) \\
+filetype.vim && (g)vim & привязка расширения файлов cкриптов \\
+syntax.vim && (g)vim & синтаксическая подсветка для скриптов \\
+.gitignore &&& список временных и производных файлов \\
+\end{tabular}
+
+\input{README.tex}
+\input{makefile.tex}
+\secup

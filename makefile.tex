@@ -1,0 +1,21 @@
+\secrel{Makefile}\label{makefile}
+
+Опции сборки (win32|linux):
+
+\bigskip
+\begin{tabular}{l l}
+EXE & суффикс исполняемого файла \\
+RES & имя объектного файла ресурсов win32.exe \\
+TAIL & опция команды \file{tail}\ число последних строк \file{MODULE.log} \\ 
+\end{tabular}
+
+\lst{Makefile}{tmp/mk.head}{make}
+
+Модуль заполняется автоматически по имени текущего каталога:
+
+\lst{Makefile}{tmp/mk.module}{make}
+
+Цель команды \file{make}\ по умолчанию: сборка и интерпретация тестового файла
+
+\lst{Makefile}{tmp/mk.exec}{make}
+

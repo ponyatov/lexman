@@ -3,7 +3,7 @@
 \usepackage[paperwidth=210mm,paperheight=148mm,margin=5mm]{geometry}
 \usepackage[unicode,colorlinks=true,pdfborderstyle={/S/U/W 1}]{hyperref}
 %\usepackage{xcolor}
-%\usepackage[pdftex]{graphicx}
+\usepackage[pdftex]{graphicx}
 %% font setup for screen reading
 %\renewcommand{\familydefault}{\sfdefault}
 %\normalfont
@@ -31,3 +31,20 @@
 
 % misc
 \newcommand{\email}[1]{$<$\href{mailto:#1}{#1}$>$}
+
+% listing and computers
+\usepackage{verbatim}
+\usepackage{listings}
+\lstset{
+basicstyle=\small,
+frame=single, % show frames around
+numbers=left, numberstyle=\small,numbersep=1mm,% line numbering
+tabsize=4, % tab style
+extendedchars=true,inputencoding=utf8, % i18n
+}
+\newcommand{\pack}[1]{\textbf{\textcolor{blue}{#1}}} % program / package
+\newcommand{\file}[1]{\textbf{#1}}
+\newcommand{\lst}[3]{\lstinputlisting[title=#1,language=#3]{#2}}
+%% languages
+\newcommand{\cpp}{$C^{++}$}
+\newcommand{\py}{Python}
