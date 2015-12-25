@@ -21,9 +21,11 @@ ofstream res("../tmp/mk.res");
 .*CXX.*\n				{ cpp<<yytext; }
 .*\$\(C\).*\n			{ cpp<<yytext; }
 ^ypp.+\n				{ ypp<<yytext; }
-.*bison.*\n				{ ypp<<yytext; }
-^lpp.+\n				{ lpp<<yytext; }
-.*flex.*\n				{ lpp<<yytext; }
+^\tbison.+\n			{ ypp<<yytext; }
+^lex.+\n				{ lpp<<yytext; }
+^\tflex.+\n				{ lpp<<yytext; }
+^res.+\n				{ res<<yytext; }
+^\twindres.+\n			{ res<<yytext; }
 \n	{}
 .	{}
 %%

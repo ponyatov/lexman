@@ -2,7 +2,7 @@ TEX = lexman.tex header.tex bib.tex
 TEX += intro.tex
 TEX += soft.tex files.tex README.tex makefile.tex
 TEX += compiler.tex fig/llvm.png
-#TEX += lexer.tex parser.tex header.tex cppcore.tex
+TEX += lexer.tex regexp.tex # parser.tex header.tex cppcore.tex
 
 #LST = lst/Makefile lst/mk.lpp
 
