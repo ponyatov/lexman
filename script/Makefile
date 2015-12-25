@@ -2,9 +2,10 @@
 # RES = res.res|
 # TAIL = -n17|-n7
 MODULE = $(notdir $(CURDIR))
+.PHONY: exec
 exec: ./$(MODULE)$(EXE)
-	./$(MODULE)$(EXE) < $(MODULE).bI > $(MODULE).blog \
-		&& tail $(TAIL) $(MODULE).blog
+	./$(MODULE)$(EXE) < $(MODULE).bI > $(MODULE).blog && tail $(TAIL) $(MODULE).blog
+.PHONY: clean	
 clean:
 	rm -rf *~ .*~ *.exe *.elf *.*log ypp.tab.?pp lex.yy.c $(RES)
 C = cpp.cpp ypp.tab.cpp lex.yy.c
