@@ -10,7 +10,7 @@ MK = tmp/mk.vars
 
 LST = $(MK)
 
-PLOTS = fig/compiler.png
+PLOTS = fig/compiler1.png fig/compiler2.png
 
 .PHONY: pdf
 pdf: lexman.pdf
@@ -22,5 +22,5 @@ lexman.pdf: $(TEX) $(LST) $(PLOTS)
 $(MK): lst/Makefile lst/mk.lpp script/Makefile
 	cd lst && make
 	
-fig/compiler.png: fig/compiler.dot
+fig/%.png: fig/%.dot
 	dot -Tpng -o $@ $<	
