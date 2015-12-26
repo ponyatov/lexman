@@ -1,0 +1,27 @@
+%{
+#include <fstream>
+#include <iomanip>
+using namespace std;
+ofstream dat("../tmp/Fi.dat");
+int numno;
+%}
+%option noyywrap
+%option yylineno
+N [0-9]+
+S [\+\-]?
+D {S}{N}\.{N}
+E {S}{N}(\.{N})?[eE]{S}{D}
+%%
+{D}				{ if (yylineno<6||yylineno>20)
+					if (++numno<13) dat<<atof(yytext)<<" "; }
+\n				{ numno=0;
+				if (yylineno<7||yylineno>21) dat<<"...\n"; 
+				if (yylineno==7) dat<<"...\n"; }
+[ ]+			{}
+.				{}
+%%
+int main() {
+	dat<<setprecision(4)<<fixed;
+	while(yylex());
+	return 0;
+}

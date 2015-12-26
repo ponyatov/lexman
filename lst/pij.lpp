@@ -1,0 +1,16 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream pij("../tmp/pij.main");
+%}
+%option main
+%x xx
+%%
+.*main.*\n		{ pij<<yytext; BEGIN(xx); }
+<xx>\}			{ pij<<yytext; BEGIN(INITIAL); }
+<xx>[ \t]+		{ pij<<" "; }
+<xx>\n			{ pij<<yytext; }
+<xx>.			{ pij<<yytext; }
+\n			{}
+.			{}
+%%

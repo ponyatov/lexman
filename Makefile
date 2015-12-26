@@ -8,7 +8,7 @@ TEX += lexer.tex regexp.tex # parser.tex header.tex cppcore.tex
 
 MK = tmp/mk.vars
 
-LST = $(MK)
+LST = $(MK) tmp/Fi.dat tmp/pij.main
 
 PLOTS = fig/compiler1.png fig/compiler2.png
 
@@ -19,14 +19,10 @@ lexman.pdf: $(TEX) $(LST) $(PLOTS)
 	mkdir -p tmp
 	$(LATEX) $< && $(LATEX) $<
 	
-$(MK): lst/Makefile lst/mk.lpp script/Makefile
+$(LST): lst/Makefile lst/mk.lpp lst/Fi.lpp script/Makefile
 	cd lst && $(MAKE) EXE=$(EXE)
 	
 fig/%.png: fig/%.dot
-	dot -Tpng -o $@ $<	
-
-lexer.tex: tmp/Fi.txt	
-tmp/Fi.txt: ../pij/pij2d/Fi.txt
-	head -n5 $< > $@
-	echo "\n...\n" >> $@
-	tail -n5 $< >> $@
+	dot -Tpng -o $@ $<
+#fig/%.pdf: fig/%.svg
+#	inkscape --file=$< --export-area-drawing --without-gui --export-pdf=$@

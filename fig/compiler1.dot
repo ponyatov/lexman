@@ -2,9 +2,11 @@ digraph {
 
 subgraph frontend {
 
+shape=box;
+
 label="лексический анализатор"; shape=box; style=filled; color=blue;
 
-"исходный код или\nтекстовый файл данных" [shape=invtriangle];
+"исходный код или\nтекстовый файл данных" [shape=invhouse];
 "лексер" [shape=box];
 "парсер" [shape=box];
 "генератор промежуточного кода" [shape=box];
