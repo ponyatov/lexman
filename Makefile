@@ -19,8 +19,8 @@ lexman.pdf: $(TEX) $(LST) $(PLOTS)
 	mkdir -p tmp
 	$(LATEX) $< && $(LATEX) $<
 	
-$(MK): lst/Makefile lst/mk1.lpp script/Makefile
-	cd lst && $(MAKE)
+$(MK): lst/Makefile lst/mk.lpp script/Makefile
+	cd lst && $(MAKE) EXE=$(EXE)
 	
 fig/%.png: fig/%.dot
 	dot -Tpng -o $@ $<	

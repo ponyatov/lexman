@@ -1,22 +1,44 @@
 \secrel{Типичная структура проекта}\secdown
 
 \begin{tabular}{l l l l}
-README.md &\ref{readme}& github & описание проекта на \url{https://github.com/} \\
-Makefile &\ref{makefile}& make & зависимости между файлами и команды сборки \\
-lpp.lpp && flex & лексер \ref{lexer}\\
-ypp.ypp && bison & парсер \ref{parser}\\
-hpp.hpp && g++/clang++ & заголовочные файлы \cpp \\
-cpp.cpp && g++/clang++ & \cpp-код: ядро интерпретатора, компилятор,\\&&&
-реализация динамических типов, пользовательский код \\
-bat.bat && win32 & запускалка gvim\\
-rc.rc && windres & описание ресурсов: иконки приложения, меню,..\\
-logo.ico && windres & логотип в .ico формате \\
-logo.png &&& логотип в .png (для github README) \\
-filetype.vim && (g)vim & привязка расширения файлов cкриптов \\
-syntax.vim && (g)vim & синтаксическая подсветка для скриптов \\
-.gitignore &&& список временных и производных файлов \\
+\file{README.md} &\ref{readme}& github 
+	& описание проекта на \url{https://github.com/} \\
+\file{Makefile} &\ref{makefile}& make 
+	& зависимости между файлами и команды сборки \\
+\file{lpp.lpp} & \ref{lpp} & flex 
+	& лексер \ref{lexer}\\
+\file{ypp.ypp} & \ref{ypp} & bison 
+	& парсер \ref{parser}\\
+\file{hpp.hpp} & \ref{hpp} & g++/clang++ 
+	& заголовочные файлы \cpp \\
+\file{cpp.cpp} & \ref{cpp} & g++/clang++ 
+	& \cpp-код: ядро интерпретатора, компилятор,\\
+	&&& реализация динамических типов, пользовательский код \\
+\file{bat.bat} & \ref{bat} & win32 
+	& запускалка gvim\\
+\file{rc.rc} & \ref{rc} & windres 
+	& описание ресурсов: иконки приложения, меню,..\\
+\file{logo.ico} && windres 
+	& логотип в .ico формате \\
+\file{logo.png} &&
+	& логотип в .png (для github README) \\
+\file{filetype.vim} & \ref{filetypevim} & (g)vim 
+	& привязка расширения файлов cкриптов \\
+\file{syntax.vim} & \ref{syntaxvim} & (g)vim 
+	& синтаксическая подсветка для скриптов \\
+\file{.gitignore} & \ref{gitignore} & git 
+	& список временных и производных файлов \\
 \end{tabular}
 
 \input{README.tex}
 \input{makefile.tex}
+
+\secrel{bat.bat}\label{bat}
+
+\lstx{bat.bat}{script/bat.bat}
+
+\secrel{rc.rc}
+
+\lstx{rc.rc}{script/rc.rc}
+
 \secup
