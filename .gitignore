@@ -6,5 +6,5 @@
 *.out
 *.toc
 tmp
-lex.yy.c
+lex.yy.c*
 *.tab.?pp
