@@ -15,7 +15,8 @@ E {S}{N}(\.{N})?[eE]{S}{D}
 {D}				{ if (yylineno<6||yylineno>20)
 					if (++numno<13) dat<<atof(yytext)<<" "; }
 \n				{ numno=0;
-				if (yylineno<7||yylineno>21) dat<<"...\n"; 
+				if (yylineno<=3) dat<<"\n";
+				else if (yylineno<7||yylineno>21) dat<<"...\n"; 
 				if (yylineno==7) dat<<"...\n"; }
 [ ]+			{}
 .				{}
