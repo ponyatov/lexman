@@ -1,0 +1,14 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream e1("../tmp/empty.1");
+ofstream e2("../tmp/empty.2");
+ofstream sp("../tmp/empty.sp");
+%}
+%option main
+%%
+^#.+\n			{ e2<<yytext; }
+^\%.*\n	{ e1<<yytext; sp<<yytext; }
+^.*\\n.*\n		{ sp<<yytext; }
+^\..+\n			{ sp<<yytext; }
+%%
