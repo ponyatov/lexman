@@ -2,13 +2,14 @@ TEX = lexman.tex header.tex bib.tex
 TEX += intro.tex
 TEX += soft.tex files.tex README.tex makefile.tex
 TEX += compiler.tex fig/llvm.png
-TEX += lexer.tex regexp.tex # parser.tex header.tex cppcore.tex
+TEX += lexer.tex regexp.tex tmp/empty.log1
+# parser.tex header.tex cppcore.tex
 
 #LST = lst/Makefile lst/mk.lpp
 
 MK = tmp/mk.vars
 
-LST = $(MK) tmp/Fi.dat tmp/pij.main
+LST = $(MK) tmp/Fi.dat tmp/pij.main 
 
 PLOTS = fig/compiler1.png fig/compiler2.png
 
@@ -26,3 +27,8 @@ fig/%.png: fig/%.dot
 	dot -Tpng -o $@ $<
 #fig/%.pdf: fig/%.svg
 #	inkscape --file=$< --export-area-drawing --without-gui --export-pdf=$@
+
+tmp/empty.log1 : empty.l Makefile
+	lex empty.l
+	gcc -std=c89 -Wpedantic -o tmp/empty.exe lex.yy.c
+	tmp/empty.exe < lex.yy.c > $@
