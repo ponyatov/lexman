@@ -22,5 +22,18 @@ std::string sym::pad(int n)	{
 
 std::string sym::tagval()	{ return "<"+tag+":"+val+">"; }
 
+Sym::Sym(std::string V):sym("sym",V)	{}
+
 Str::Str(std::string V):sym("str",V)	{}
 std::string Str::tagval()				{ return "<"+tag+":'"+val+"'>";}
+
+Hex::Hex(std::string V):sym("hex",V)	{}
+Bin::Bin(std::string V):sym("bin",V)	{}
+
+Int::Int(std::string V):sym("int","")	{ i = atoi(V.c_str()); }
+std::string Int::tagval() {
+	std::ostringstream os; os<<"<"<<tag<<":"<< i <<">"; return os.str(); }
+
+Num::Num(std::string V):sym("num","")	{ f = atof(V.c_str()); }
+std::string Num::tagval() {
+	std::ostringstream os; os<<"<"<<tag<<":"<< f <<">"; return os.str(); }

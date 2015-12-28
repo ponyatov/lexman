@@ -5,13 +5,20 @@ std::string StringParseBuffer;
 %option noyywrap
 %option yylineno
 %x stringstate
+S [\+\-]?
+N [0-9]+
 %%
-#[^\n]*			{}			/* line comment */
+#[^\n]*				{}				/* line comment */
 
 '				{BEGIN(stringstate); StringParseBuffer="";}		/* string */
 <stringstate>'	{BEGIN(INITIAL);
 				yylval.o = new Str(StringParseBuffer); return STR;}
 <stringstate>.	{StringParseBuffer+=yytext;}
 
+{S}{N}\.{N}			TOC(Num,NUM)	/* numbers */
+{S}{N}[eE]{S}{N}	TOC(Num,NUM)
+{S}{N}				TOC(Int,NUM)
+0x[0-9A-F]+			TOC(Hex,NUM)
+0b[01]+				TOC(Bin,NUM)
 				
 %%
