@@ -1,0 +1,17 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream ssym("../tmp/cpp.sym");
+ofstream sssm("../tmp/cpp.ssm");
+ofstream sstr("../tmp/cpp.str");
+%}
+%option main
+%x xx
+%%
+^.*sym::.*\{		{ ssym<<yytext; BEGIN(xx); }
+<xx>\}.*\n		{ ssym<<yytext<<"\n"; BEGIN(INITIAL); }
+<xx>\n			{ ssym<<yytext; }
+<xx>.			{ ssym<<yytext; }
+^.*Sym::.*\n	{ sssm<<yytext; }
+^.*Str::.*\n	{ sstr<<yytext; }
+%%

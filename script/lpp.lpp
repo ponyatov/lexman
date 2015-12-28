@@ -21,5 +21,7 @@ N [0-9]+
 {S}{N}				TOC(Int,NUM)	/* integer */
 0x[0-9A-F]+			TOC(Hex,NUM)	/* hex */
 0b[01]+				TOC(Bin,NUM)	/* binary */
+
+[a-zA-Z0-9_]+		TOC(Sym,SYM)	/* symbol */
 				
 %%

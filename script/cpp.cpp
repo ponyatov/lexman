@@ -7,20 +7,16 @@ int main(int argc, char *argv[]) { /*env_init();*/ return yyparse(); }
 void W(std::string*s)	{ std::cout << s; }
 void W(sym*o)			{ std::cout << o->dump(); }
 
-sym::sym(std::string T,std::string V)	{ tag=T; val=V; }
+sym::sym(std::string T,std::string V)	{ tag=T; val=V; }	// create AST object
 
-std::string sym::dump(int depth) {
-	std::string S = "\n"+pad(depth)+tagval();
+std::string sym::pad(int n)	{ std::string S; for (int i=0;i<n;i++) S+="\t"; return S; }
+std::string sym::tagval()	{ return "<"+tag+":"+val+">"; }	// header <tag:val>
+std::string sym::dump(int depth) {							// dump as text tree
+	std::string S = "\n"+pad(depth)+tagval();				// object header
+	for (auto it=nest.begin();it!=nest.end();it++)			// recurse nest[]ed
+		S += (*it)->dump(depth+1);
 	return S;
 }
-
-std::string sym::pad(int n)	{
-	std::string S;
-	for (int i=0;i<n;i++) S+="\t";
-	return S;
-}
-
-std::string sym::tagval()	{ return "<"+tag+":"+val+">"; }
 
 Sym::Sym(std::string V):sym("sym",V)	{}
 

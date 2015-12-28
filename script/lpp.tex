@@ -12,7 +12,7 @@
 
 \subsubsection{Комментарий}
 
-\lstx{lpp.lpp}{tmp/lpp.comment}
+\lst{lpp.lpp}{tmp/lpp.comment}{c++}
 
 \subsubsection{Строка}\label{lexstring}
 
@@ -42,3 +42,13 @@
 \subsubsection{Числа}\label{lexnumbers}
 
 \lst{lpp.lpp}{tmp/lpp.number}{c++}
+
+При распозанавании чисел используется подставновка regexp-переменных
+\verb|{S}|\ (знак числа) и \verb|{N}|\ (цифры), заданных в области определений. 
+
+\subsubsection{Символ}\label{lexsymbol}
+
+Все нераспознанные блоки текста, состоящие из литинских букв и цифр,
+распознаются как \term{символ}\ \ref{symbol}:
+
+\lst{lpp.lpp}{tmp/lpp.sym}{c++}

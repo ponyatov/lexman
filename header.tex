@@ -2,12 +2,15 @@
 \documentclass[oneside,12pt]{book}
 \usepackage[paperwidth=210mm,paperheight=148mm,margin=5mm]{geometry}
 \usepackage[unicode,colorlinks=true,pdfborderstyle={/S/U/W 1}]{hyperref}
-%\usepackage{xcolor}
 \usepackage[pdftex]{graphicx}
 \newcommand{\fig}[3]{\includegraphics[#3]{#2}}
-%% font setup for screen reading
-%\renewcommand{\familydefault}{\sfdefault}
-%\normalfont
+% font setup for screen reading
+\renewcommand{\familydefault}{\sfdefault}
+\normalfont
+
+% colors
+\usepackage{xcolor}
+\definecolor{darkcyan}{rgb}{0,.5,.5}
 
 % Cyrillization
 \usepackage[T1,T2A]{fontenc}
@@ -50,8 +53,9 @@ basicstyle=\small,
 frame=single, % show frames around
 numbers=left, numberstyle=\small,numbersep=1mm,% line numbering
 tabsize=4, % tab style
-extendedchars=true,inputencoding=utf8, % i18n
+%extendedchars=true,inputencoding=utf8, % i18n
 keywordstyle=\color{magenta},%\texttt,
+commentstyle=\color{darkcyan}
 }
 \newcommand{\pack}[1]{\textbf{\textcolor{blue}{#1}}} % program / package
 \newcommand{\prog}[1]{\textbf{\textcolor{blue}{#1}}}
@@ -64,3 +68,6 @@ keywordstyle=\color{magenta},%\texttt,
 \newcommand{\java}{Java}
 \newcommand{\cs}{$C^\#$}
 \newcommand{\bi}{Ы}
+\newcommand{\lisp}{Lisp}
+\newcommand{\st}{SmallTalk}
+\newcommand{\forth}{Forth}

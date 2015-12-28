@@ -4,16 +4,23 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+#include <vector>
+#include <map>
 
 									// symbolic class tree
-struct sym {
-	std::string tag;
-	std::string val;
-	sym(std::string,std::string);
-	std::string dump(int depth=0);
+struct sym {						// === abstract symbolic data type ===
+	std::string tag;					// type/class tag
+	std::string val;					// object value in string form
+	sym(std::string,std::string);		// T:V constuctor
+	// ----------------------------------- nested objects
+	std::vector<sym*> nest;
+	void push(sym*);					// push to nest[] as stack
+	sym* pop();							// pop from nest[] as stack
+	// ----------------------------------- textual object dump
+	std::string dump(int depth=0);		// dump object in tree form
 protected:
-	std::string pad(int n);
-	virtual std::string tagval();
+	std::string pad(int n);				// pad dump with TABs
+	virtual std::string tagval();		// return "<tag:val>"
 };
 															// scalar types
 struct Sym:sym { Sym(std::string); };
@@ -23,11 +30,11 @@ struct Bin:sym { Bin(std::string); };
 struct Int:sym { Int(std::string); std::string tagval(); long i; };
 struct Num:sym { Num(std::string); std::string tagval(); double f; };
 
-									// writers
+									// ==== writers ===
 void W(std::string*);
 void W(sym*);
 
-									// lexer/parser interface
+									// === lexer/parser interface ===
 extern int yylex();						// flex
 extern int yylineno;
 extern char* yytext;
