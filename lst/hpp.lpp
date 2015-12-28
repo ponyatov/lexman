@@ -1,0 +1,26 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream ssym("../tmp/hpp.sym");
+ofstream sssm("../tmp/hpp.ssm");
+ofstream sstr("../tmp/hpp.str");
+ofstream snum("../tmp/hpp.num");
+ofstream sint("../tmp/hpp.int");
+ofstream shex("../tmp/hpp.hex");
+ofstream sbin("../tmp/hpp.bin");
+%}
+%option main
+%s sym
+%%
+^[a-z]+[ \t]+sym[ \t]*\{	{ BEGIN(sym); ssym<<yytext; }
+<sym>\}						{ BEGIN(INITIAL); ssym<<yytext; }
+<sym>\n						{ ssym<<yytext; }
+<sym>.						{ ssym<<yytext; }
+
+^.*Sym.*\n	{ sssm<<yytext; }
+^.*Str.*\n	{ sstr<<yytext; }
+^.*Int.*\n	{ sint<<yytext; }
+^.*Hex.*\n	{ shex<<yytext; }
+^.*Bin.*\n	{ sbin<<yytext; }
+^.*Num.*\n	{ snum<<yytext; }
+%%

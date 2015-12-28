@@ -1,0 +1,14 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream s("../tmp/ypp.str");
+ofstream y("../tmp/ypp.sym");
+ofstream n("../tmp/ypp.num");
+%}
+%option main
+%%
+^.*express.*\n	{ s<<yytext; y<<yytext; n<<yytext; }
+^.*STR.*\n		{ s<<yytext; y<<yytext; n<<yytext; }
+^.*SYM.*\n		{ s<<yytext; y<<yytext; n<<yytext; }
+^.*NUM.*\n		{ s<<yytext; y<<yytext; n<<yytext; }
+%%

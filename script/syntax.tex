@@ -2,13 +2,60 @@
 
 \input{script/comment}
 
+\secrel{AST: абстрактный символьный тип}
+
+\lst{hpp.hpp}{tmp/hpp.sym}{c++}
+\lst{hpp.hpp}{tmp/hpp.ssm}{c++}
+
 \secrel{Скалярные типы}\secdown
 
-\secrel{Строка}
+\secrel{Строка <str:'строка'>}
 
 Работа лексера по разбору строк описана в \ref{lexstring}
 
 \lst{lpp.lpp}{tmp/lpp.str}{c++}
+
+\lst{ypp.ypp}{tmp/ypp.str}{c++}
+
+\lst{hpp.hpp}{tmp/hpp.str}{c++}
+
+\secrel{Числа}
+
+Работа лексера по разбору чисел описана в \ref{lexnumbers}
+
+\lst{ypp.ypp}{tmp/ypp.num}{c++}
+
+\secrel{Int: целое число <int:1234>}
+
+\lstx{script.bI}{tmp/bi.int}
+
+\lst{lpp.lpp}{tmp/lpp.int}{c++}
+
+\lst{hpp.hpp}{tmp/hpp.int}{c++}
+
+\secrel{Hex: машинное шестнадцатеричное <hex:0x12AF> }
+
+\lstx{script.bI}{tmp/bi.hex}
+
+\lst{lpp.lpp}{tmp/lpp.hex}{c++}
+
+\lst{hpp.hpp}{tmp/hpp.hex}{c++}
+
+\secrel{Bin: машинное двоичное <bin:0b1101>}
+
+\lstx{script.bI}{tmp/bi.bin}
+
+\lst{lpp.lpp}{tmp/lpp.bin}{c++}
+
+\lst{hpp.hpp}{tmp/hpp.bin}{c++}
+
+\secrel{Num: число с плавающей точкой <num:1.23> <num:-3e+5>}
+
+\lstx{script.bI}{tmp/bi.num}
+
+\lst{lpp.lpp}{tmp/lpp.num}{c++}
+
+\lst{hpp.hpp}{tmp/hpp.num}{c++}
 
 \secup
 \secup

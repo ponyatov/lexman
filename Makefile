@@ -4,14 +4,14 @@ TEX += soft.tex files.tex README.tex makefile.tex
 TEX += compiler.tex fig/llvm.png
 TEX += lexer.tex regexp.tex tmp/empty.log
 TEX += script/lexer.tex script/lpp.lpp script/lpp.tex
-TEX += script/syntax.tex
+TEX += script/syntax.tex script/script.bI
 # parser.tex header.tex cppcore.tex
 
 #LST = lst/Makefile lst/mk.lpp
 
 MK = tmp/mk.vars
 
-LST = $(MK) tmp/Fi.dat tmp/pij.main 
+LST = $(MK) tmp/Fi.dat tmp/pij.main tmp/bi.comment
 
 PLOTS = fig/compiler1.png fig/compiler2.png
 

@@ -1,9 +1,16 @@
 
-LPP = ../tmp/lpp.hpp ../tmp/lpp.strbuf ../tmp/lpp.options 
+LPP = ../tmp/lpp.hpp ../tmp/lpp.strbuf ../tmp/lpp.options
+
+bI = ../tmp/bi.comment ../tmp/bi.int ../tmp/bi.hex ../tmp/bi.bin ../tmp/bi.num
+
+YPP = ../tmp/ypp.str ../tmp/ypp.sym ../tmp/ypp.num
+
+HPP = ../tmp/hpp.sym ../tmp/hpp.str ../tmp/hpp.num \
+	../tmp/hpp.int ../tmp/hpp.hex ../tmp/hpp.bin 
 
 .PHONY: lst
 lst: ../tmp/mk.head ../tmp/Fi.dat ../tmp/pij.main \
-	../tmp/empty.1 ../tmp/empty.2 $(LPP)
+	../tmp/empty.1 ../tmp/empty.2 $(LPP) $(YPP) $(bI) $(HPP)
 	
 ../tmp/mk.head: ./mk$(EXE) ../script/Makefile
 	./mk$(EXE) < ../script/Makefile
@@ -13,8 +20,14 @@ lst: ../tmp/mk.head ../tmp/Fi.dat ../tmp/pij.main \
 	./pij$(EXE) < ../../pij/pij2d/cpp.cpp
 ../tmp/empty.1 ../tmp/empty.2: ./empty$(EXE) ../empty.l 	
 	./empty$(EXE) < ../empty.l
+$(YPP): ./ypp$(EXE) ../script/ypp.ypp
+	./ypp$(EXE) < ../script/ypp.ypp
 $(LPP): ./lpp$(EXE) ../script/lpp.lpp
 	./lpp$(EXE) < ../script/lpp.lpp
+$(HPP): ./hpp$(EXE) ../script/hpp.hpp
+	./hpp$(EXE) < ../script/hpp.hpp
+$(bI): ./script$(EXE) ../script/script.bI
+	./script$(EXE) < ../script/script.bI
 	
 ./%$(EXE): %.cpp
 	$(CXX) -o $@ $<

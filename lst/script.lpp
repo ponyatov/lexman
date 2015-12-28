@@ -1,0 +1,20 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream comment("../tmp/bi.comment");
+ofstream i("../tmp/bi.int");
+ofstream h("../tmp/bi.hex");
+ofstream b("../tmp/bi.bin");
+ofstream n("../tmp/bi.num");
+%}
+%option main
+S [\-\+]?
+N [0-9]+
+%%
+#[^\n]*\n			{ comment<<yytext; }
+{S}{N}\.{N}			{ n<<yytext<<" "; }
+{S}{N}[eE]{S}{N}	{ n<<yytext<<" "; }
+0x[0-9A-F]+			{ h<<yytext<<" "; }
+0b[01]+				{ b<<yytext<<" "; }
+{S}{N}				{ i<<yytext<<" "; }
+%%

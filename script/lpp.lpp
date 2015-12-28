@@ -15,10 +15,11 @@ N [0-9]+
 				yylval.o = new Str(StringParseBuffer); return STR;}
 <stringstate>.	{StringParseBuffer+=yytext;}
 
-{S}{N}\.{N}			TOC(Num,NUM)	/* numbers */
-{S}{N}[eE]{S}{N}	TOC(Num,NUM)
-{S}{N}				TOC(Int,NUM)
-0x[0-9A-F]+			TOC(Hex,NUM)
-0b[01]+				TOC(Bin,NUM)
+									/* numbers */
+{S}{N}\.{N}			TOC(Num,NUM)	/* floating point */
+{S}{N}[eE]{S}{N}	TOC(Num,NUM)	/* exponential */
+{S}{N}				TOC(Int,NUM)	/* integer */
+0x[0-9A-F]+			TOC(Hex,NUM)	/* hex */
+0b[01]+				TOC(Bin,NUM)	/* binary */
 				
 %%

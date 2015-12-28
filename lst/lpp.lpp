@@ -7,6 +7,12 @@ ofstream cmnt("../tmp/lpp.comment");
 ofstream num("../tmp/lpp.number");
 ofstream str("../tmp/lpp.str");
 ofstream sym("../tmp/lpp.sym");
+
+ofstream i("../tmp/lpp.int");
+ofstream h("../tmp/lpp.hex");
+ofstream b("../tmp/lpp.bin");
+ofstream n("../tmp/lpp.num");
+
 %}
 %option main
 %%
@@ -16,7 +22,13 @@ ofstream sym("../tmp/lpp.sym");
 ^'.+\n					{ str<<yytext; }
 ^.*<stringstate>.*\n	{ str<<yytext; }
 ^.*return\ STR.*\n		{ str<<yytext; }
-^%%\n					{ str<<yytext; }
+^%%\n					{ str<<yytext; num<<yytext; }
 ^%option.+\n			{ opt<<yytext; }
 ^#.+\n					{ cmnt<<yytext; }
+^[SN][ \t].+\n			{ num<<yytext; }
+^\{S\}\{N\}[ \t]+.+\n	{ num<<yytext; i<<yytext; }
+^\{S\}\{N\}[\[\\].+\n	{ num<<yytext; n<<yytext; }
+^0x.+\n					{ num<<yytext; h<<yytext; }
+^0b.+\n					{ num<<yytext; b<<yytext; }
+^.*numbers.+\n			{ num<<yytext; }
 %%
