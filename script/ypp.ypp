@@ -5,15 +5,25 @@
 %token <o> SYM NUM STR						/* symbol number string */
 %token <o> EQ ADD SUB MUL DIV POW			/* = + - * / ^ */
 %token <o> LP RP LQ RQ LB RB LL GG COLON	/* ( ) [ ] { } < > : */
-%type  <o> ex list vector pair				/* expression [list] <vector> pa:ir */
-%type  <o> lambda							/* {lambda} */
+%type  <o> ex list vector 					/* expression [list] <vector> pa:ir */
+%type  <o> lambda 							/* {lambda} */
+
+%left ADD SUB
+%left MUL DIV
+%left POW
+%left COLON
 %%
 syntax: | syntax ex { W($2); } ;
 ex: SYM | NUM | STR
 	| LQ list RQ		{ $$=$2; }
 	| LL vector GG		{ $$=$2; }
 	| LB lambda RB		{ $$=$2; }
-	| pair				
+	| ex ADD ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex SUB ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex MUL ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex DIV ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex POW ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex COLON ex		{ $$=new Pair($1,$3); }
 ;
 list:					{ $$=new List(); }
 	| list ex			{ $$=$1; $$->push($2); }
@@ -21,10 +31,8 @@ list:					{ $$=new List(); }
 vector:					{ $$=new Vector(); }
 	| vector ex			{ $$=$1; $$->push($2); }
 ;
-pair : ex COLON ex		{ $$=new Pair($1,$3); }
-;
 lambda:					{ $$=new Lambda(); }
-	| lambda SYM COLON	{ $$=$1; $$->setpar($3); }
+	| lambda SYM COLON	{ $$=$1; $$->setpar($2); }
 	| lambda ex			{ $$=$1; $$->push($2); }
 ;
 %%

@@ -36,6 +36,12 @@ N [0-9]+
 \=					TOC(Op,EQ)
 \:					TOC(Op,COLON)
 
+\+					TOC(Op,ADD)
+\-					TOC(Op,SUB)
+\*					TOC(Op,MUL)
+\/					TOC(Op,DIV)
+\^					TOC(Op,POW)
+
 [ \t\r\n]+	{}
 .			{}
 %%

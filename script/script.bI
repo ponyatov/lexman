@@ -4,6 +4,6 @@
 [ -01.20 -03e+04 ]				# [ float numbers ] nested list
 'string'
 [ symbol ctype:string ]
-[ {} {X:} #{Y:Y} {X:Y: X+Y} 	# lambdas
+[ {} {X:} {Y:Y} {X:Y: X+Y*A^B}	# lambdas
 ]
 ]								# / outer list
