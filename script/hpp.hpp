@@ -16,6 +16,9 @@ struct sym {						// === abstract symbolic data type ===
 	std::vector<sym*> nest;
 	void push(sym*);					// push to nest[] as stack
 	sym* pop();							// pop from nest[] as stack
+	// ----------------------------------- parameters
+	std::map<std::string,sym*> par;
+	void setpar(sym*);					// set parameter
 	// ----------------------------------- textual object dump
 	std::string dump(int depth=0);		// dump object in tree form
 protected:
@@ -29,6 +32,14 @@ struct Hex:sym { Hex(std::string); };
 struct Bin:sym { Bin(std::string); };
 struct Int:sym { Int(std::string); std::string tagval(); long i; };
 struct Num:sym { Num(std::string); std::string tagval(); double f; };
+
+															// composite types
+struct List:sym { List(); };
+struct Vector:sym { Vector(); };
+struct Pair:sym { Pair(sym*,sym*); };
+															// functionals
+struct Op:sym { Op(std::string); };
+struct Lambda:sym { Lambda(); };
 
 									// ==== writers ===
 void W(std::string*);

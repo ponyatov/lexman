@@ -9,6 +9,8 @@ void W(sym*o)			{ std::cout << o->dump(); }
 
 sym::sym(std::string T,std::string V)	{ tag=T; val=V; }	// create AST object
 
+void sym::push(sym*o)					{ nest.push_back(o); }
+
 std::string sym::pad(int n)	{ std::string S; for (int i=0;i<n;i++) S+="\t"; return S; }
 std::string sym::tagval()	{ return "<"+tag+":"+val+">"; }	// header <tag:val>
 std::string sym::dump(int depth) {							// dump as text tree
@@ -33,3 +35,10 @@ std::string Int::tagval() {
 Num::Num(std::string V):sym("num","")	{ f = atof(V.c_str()); }
 std::string Num::tagval() {
 	std::ostringstream os; os<<"<"<<tag<<":"<< f <<">"; return os.str(); }
+
+List::List():sym("[","]") {}
+Vector::Vector():sym("","") {}
+Pair::Pair(sym*A,sym*B):sym(A->val,B->val) { push(A); push(B); }
+
+Op::Op(std::string V):sym("op",V) {}
+Lambda::Lambda():sym("^","^") {}

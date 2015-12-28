@@ -23,5 +23,19 @@ N [0-9]+
 0b[01]+				TOC(Bin,NUM)	/* binary */
 
 [a-zA-Z0-9_]+		TOC(Sym,SYM)	/* symbol */
-				
+
+									/* operators */
+\(					TOC(Op,LP)
+\)					TOC(Op,RP)
+\[					TOC(Op,LQ)
+\]					TOC(Op,RQ)
+\{					TOC(Op,LB)
+\}					TOC(Op,RB)
+\<					TOC(Op,LL)
+\>					TOC(Op,GG)
+\=					TOC(Op,EQ)
+\:					TOC(Op,COLON)
+
+[ \t\r\n]+	{}
+.			{}
 %%
