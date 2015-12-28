@@ -1,0 +1,12 @@
+%{
+#include "hpp.hpp"
+%}
+%defines %union { sym*o; }
+%token <o> SYM NUM STR				/* symbol number string */
+%token <o> EQ ADD SUB MUL DIV POW	/* = + - * / ^ */
+%token <o> LP RP LQ RQ LB RB COLON	/* ( ) [ ] { } : */
+%type  <o> ex						/* expression */
+%%
+syntax: | syntax ex { W($2); } ;
+ex: SYM | NUM | STR ;
+%%

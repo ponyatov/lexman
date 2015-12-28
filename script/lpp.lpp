@@ -1,0 +1,8 @@
+%{
+#include "hpp.hpp"
+std::string StringParseBuffer;
+%}
+%option noyywrap
+%option yylineno
+%%
+%%

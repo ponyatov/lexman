@@ -1,4 +1,4 @@
-\secrel{Лексер для языка \bi}
+\secrel{Лексер для языка \bi}\secdown
 
 Сложные техники работы с текстовыми данными в этой книге будут далее 
 рассматриваться на примере скриптового языка \bi. В этом разделе
@@ -11,6 +11,71 @@
 Если вам требуется разбирать вложенные выражения, начиная от арифметических
 выражений с инфиксными операторами и скобками, типа \verb|(1+2*3)/sin(x)|,
 вам необходимо использовать связку \verb|flex+bison|\ (\verb|lex+yacc|)   
-\end{framed} 
+\end{framed}
+
+\secrel{Схема файлов для связки \prog{flex/bison}}\secdown
+
+%\fig{}{fig/multi.png}{width=0.9\textwidth}
+
+\begin{tabular}{l}
+в верхней части (до линии) перечислены определенные в файле объекты,\\
+\hline
+после линии указаны используемые объекты из других файлов. 
+\end{tabular}
+
+\secrel{ypp.ypp}
+
+\begin{tabular}{l l l}
+int & yyparse() & запуск парсера \\
+union & yylval \verb|{| int i; float f; std::string *s; sym*o; \verb|}| &
+структура для одного синтаксическогоо узла \\
+\hline
+void & yyerror(std::string) &
+функция вызывается парсером\\&& при возникновении синтаксической ошибки \\
+\end{tabular}
+
+\secrel{lpp.lpp}
+
+\begin{tabular}{l l l}
+int & yylex() & функция лексера, выделяет \emph{один}\ токен в \verb|yylval|\\
+&&и возвращает код токена, определенный в ypp.ypp.\\
+char* & yytext & указатель на текст токена, выделенный лексером \\
+int & yylength & длина выделенного текста\\
+int & yylineno & номер текущей строки, требует \verb|%option yylineno|,
+используется в yyerror()\\
+\end{tabular}
+
+\secrel{hpp.hpp}
+
+\begin{tabular}{l l l l}
+class & sym & \ref{sym} &
+базовый виртуальный класс для символьных типов данных \\
+&&&\underline{скалярые типы данных}:\\
+sym & Sym & \ref{Sym} & символ \\
+sym & Str & \ref{Str} & строка \\
+sym & Int & \ref{Int} & целое число \\
+sym & Num & \ref{Num} & число с плавающей точкой \\
+&&&\underline{функциональные типы данных}:\\
+sym & Op & \ref{Op} & оператор \\
+\#define & TOC(C,X) & \ref{TOC} & макрос, создающий объект класса С для токена X \\
+\end{tabular}
+
+\secrel{cpp.cpp}
+
+\begin{tabular}{l l l l}
+int & main(int argc, char *argv\verb|[ ]|) &&\\
+void & yyerror(std::string) & \ref{yyerror} &
+функция аварийного завершения по ошибке \\
+\hline
+\verb|yyparse()|\\
+\end{tabular}
+
+
+\secup
+
+
+\secrel{\file{lpp.lpp}} 
 
 \lst{lpp.lpp}{script/lpp.lpp}{c++}
+
+\secup

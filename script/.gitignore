@@ -1,0 +1,7 @@
+*~
+*.swp
+script
+script.exe
+*.blog
+lex.yy.c
+ypp.tab.?pp
