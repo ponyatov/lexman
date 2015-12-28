@@ -4,5 +4,14 @@ std::string StringParseBuffer;
 %}
 %option noyywrap
 %option yylineno
+%x stringstate
 %%
+#[^\n]*			{}			/* line comment */
+
+'				{BEGIN(stringstate); StringParseBuffer="";}		/* string */
+<stringstate>'	{BEGIN(INITIAL);
+				yylval.o = new Str(StringParseBuffer); return STR;}
+<stringstate>.	{StringParseBuffer+=yytext;}
+
+				
 %%

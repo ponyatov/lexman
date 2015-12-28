@@ -3,7 +3,8 @@ TEX += intro.tex
 TEX += soft.tex files.tex README.tex makefile.tex
 TEX += compiler.tex fig/llvm.png
 TEX += lexer.tex regexp.tex tmp/empty.log
-TEX += script/lexer.tex script/lpp.lpp
+TEX += script/lexer.tex script/lpp.lpp script/lpp.tex
+TEX += script/syntax.tex
 # parser.tex header.tex cppcore.tex
 
 #LST = lst/Makefile lst/mk.lpp

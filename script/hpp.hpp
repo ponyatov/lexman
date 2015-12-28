@@ -5,16 +5,17 @@
 //#include <cstdlib>
 
 									// symbolic class tree
-class sym {
-public:
+struct sym {
 	std::string tag;
 	std::string val;
 	sym(std::string,std::string);
 	std::string dump(int depth=0);
 protected:
 	std::string pad(int n);
-	std::string tagval();
+	virtual std::string tagval();
 };
+
+struct Str:sym { Str(std::string); std::string tagval(); };
 
 									// writers
 void W(std::string*);
@@ -26,5 +27,6 @@ extern int yylineno;
 extern char* yytext;
 extern int yyparse();					// bison
 extern void yyerror(std::string);
+#include "ypp.tab.hpp"
 
 #endif // _H_SCRIPT

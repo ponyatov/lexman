@@ -1,0 +1,22 @@
+%{
+#include <fstream>
+using namespace std;
+ofstream hpp("../tmp/lpp.hpp");
+ofstream opt("../tmp/lpp.options");
+ofstream cmnt("../tmp/lpp.comment");
+ofstream num("../tmp/lpp.number");
+ofstream str("../tmp/lpp.str");
+ofstream sym("../tmp/lpp.sym");
+%}
+%option main
+%%
+^(%\{|#inc).*\n			{ hpp<<yytext; }
+^(%\}|std::string).*\n	{ str<<yytext; }
+^%x.+\n					{ str<<yytext; }
+^'.+\n					{ str<<yytext; }
+^.*<stringstate>.*\n	{ str<<yytext; }
+^.*return\ STR.*\n		{ str<<yytext; }
+^%%\n					{ str<<yytext; }
+^%option.+\n			{ opt<<yytext; }
+^#.+\n					{ cmnt<<yytext; }
+%%

@@ -1,0 +1,22 @@
+\secrel{Лексер для языка \bi: script/lpp.lpp}\label{bilex}
+
+Так как используется модульная компиляция, в файле \file{hpp.hpp}\ вынесены
+объявления, которые нам нужно подключить: 
+
+\lst{lpp.lpp}{tmp/lpp.hpp}{c++}
+
+Для компиляции и вывода номера строк в синтаксических ошибках
+нужно включить пару опций:
+ 
+\lstx{lpp.lpp}{tmp/lpp.options}
+
+\subsubsection{Комментарий}
+
+\lstx{lpp.lpp}{tmp/lpp.comment}
+
+\subsubsection{Строка}\label{lexstring}
+
+Для разбора строк будет использоваться специальное состояние лексера,
+и отдельный буфер разбора:  
+
+\lst{lpp.lpp}{tmp/lpp.str}{c++}

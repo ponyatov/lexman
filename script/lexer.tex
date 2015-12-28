@@ -1,4 +1,4 @@
-\secrel{Лексер для языка \bi}\secdown
+\secrel{Схема файлов для связки \prog{flex/bison}}
 
 Сложные техники работы с текстовыми данными в этой книге будут далее 
 рассматриваться на примере скриптового языка \bi. В этом разделе
@@ -13,17 +13,13 @@
 вам необходимо использовать связку \verb|flex+bison|\ (\verb|lex+yacc|)   
 \end{framed}
 
-\secrel{Схема файлов для связки \prog{flex/bison}}\secdown
-
-%\fig{}{fig/multi.png}{width=0.9\textwidth}
-
 \begin{tabular}{l}
 в верхней части (до линии) перечислены определенные в файле объекты,\\
 \hline
 после линии указаны используемые объекты из других файлов. 
 \end{tabular}
 
-\secrel{ypp.ypp}
+\subsubsection{ypp.ypp}
 
 \begin{tabular}{l l l}
 int & yyparse() & запуск парсера \\
@@ -34,7 +30,7 @@ void & yyerror(std::string) &
 функция вызывается парсером\\&& при возникновении синтаксической ошибки \\
 \end{tabular}
 
-\secrel{lpp.lpp}
+\subsubsection{lpp.lpp}
 
 \begin{tabular}{l l l}
 int & yylex() & функция лексера, выделяет \emph{один}\ токен в \verb|yylval|\\
@@ -45,7 +41,7 @@ int & yylineno & номер текущей строки, требует \verb|%o
 используется в yyerror()\\
 \end{tabular}
 
-\secrel{hpp.hpp}
+\subsubsection{hpp.hpp}
 
 \begin{tabular}{l l l l}
 class & sym & \ref{sym} &
@@ -57,10 +53,11 @@ sym & Int & \ref{Int} & целое число \\
 sym & Num & \ref{Num} & число с плавающей точкой \\
 &&&\underline{функциональные типы данных}:\\
 sym & Op & \ref{Op} & оператор \\
+&&&\\
 \#define & TOC(C,X) & \ref{TOC} & макрос, создающий объект класса С для токена X \\
 \end{tabular}
 
-\secrel{cpp.cpp}
+\subsubsection{cpp.cpp}
 
 \begin{tabular}{l l l l}
 int & main(int argc, char *argv\verb|[ ]|) &&\\
@@ -70,12 +67,6 @@ void & yyerror(std::string) & \ref{yyerror} &
 \verb|yyparse()|\\
 \end{tabular}
 
-
-\secup
-
-
-\secrel{\file{lpp.lpp}} 
-
-\lst{lpp.lpp}{script/lpp.lpp}{c++}
+\input{script/lpp}
 
 \secup
