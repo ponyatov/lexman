@@ -8,6 +8,7 @@ ofstream snum("../tmp/hpp.num");
 ofstream sint("../tmp/hpp.int");
 ofstream shex("../tmp/hpp.hex");
 ofstream sbin("../tmp/hpp.bin");
+ofstream toc("../tmp/hpp.TOC");
 %}
 %option main
 %s sym
@@ -23,4 +24,5 @@ ofstream sbin("../tmp/hpp.bin");
 ^.*Hex.*\n	{ shex<<yytext; }
 ^.*Bin.*\n	{ sbin<<yytext; }
 ^.*Num.*\n	{ snum<<yytext; }
+^#define\ TOC.+\n	{ toc<<yytext; }
 %%

@@ -41,9 +41,11 @@ AST-объект поддерживает хранение вложенных э
 Функции \verb|push/pop|\ используются при определении пользовательских 
 анонимных и именованных функций \ref{lamdba}\ в стиле языка \forth.  
 
+\lst{hpp.hpp}{tmp/hpp.TOC}{c++}
+
 \secrel{Скалярные типы}\secdown
 
-\secrel{Символ <sym:symbol>}
+\secrel{Символ <sym:symbol>}\label{Sym}
 
 \lst{lpp.lpp}{tmp/lpp.sym}{c++}
 \lst{hpp.hpp}{tmp/hpp.ssm}{c++}
@@ -51,7 +53,7 @@ AST-объект поддерживает хранение вложенных э
 
 \secrel{Строка <str:'строка'>}
 
-Работа лексера по разбору строк описана в \ref{lexstring}
+Работа лексера по разбору строк описана в \ref{lexstring}\label{Str}
 
 \lst{lpp.lpp}{tmp/lpp.str}{c++}
 \lst{ypp.ypp}{tmp/ypp.str}{c++}
@@ -67,7 +69,7 @@ AST-объект поддерживает хранение вложенных э
 
 \lst{ypp.ypp}{tmp/ypp.num}{c++}
 
-\secrel{Int: целое число <int:1234>}
+\secrel{Int: целое число <int:1234>}\label{Int}
 
 \lstx{script.bI}{tmp/bi.int}
 
@@ -76,7 +78,7 @@ AST-объект поддерживает хранение вложенных э
 \lst{hpp.hpp}{tmp/hpp.int}{c++}
 \lst{cpp.cpp}{tmp/cpp.int}{c++}
 
-\secrel{Hex: машинное шестнадцатеричное <hex:0x12AF> }
+\secrel{Hex: машинное шестнадцатеричное <hex:0x12AF> }\label{Hex}
 
 \lstx{script.bI}{tmp/bi.hex}
 
@@ -85,7 +87,7 @@ AST-объект поддерживает хранение вложенных э
 \lst{hpp.hpp}{tmp/hpp.hex}{c++}
 \lst{cpp.cpp}{tmp/cpp.hex}{c++}
 
-\secrel{Bin: машинное двоичное <bin:0b1101>}
+\secrel{Bin: машинное двоичное <bin:0b1101>}\label{Bin}
 
 \lstx{script.bI}{tmp/bi.bin}
 
@@ -94,7 +96,7 @@ AST-объект поддерживает хранение вложенных э
 \lst{hpp.hpp}{tmp/hpp.bin}{c++}
 \lst{cpp.cpp}{tmp/cpp.bin}{c++}
 
-\secrel{Num: число с плавающей точкой <num:1.23> <num:-3e+5>}
+\secrel{Num: число с плавающей точкой <num:1.23> <num:-3e+5>}\label{Num}
 
 \lstx{script.bI}{tmp/bi.num}
 
@@ -104,4 +106,17 @@ AST-объект поддерживает хранение вложенных э
 \lst{cpp.cpp}{tmp/cpp.num}{c++}
 
 \secup
+
+\secrel{Композитные типы}\label{composite}\secdown
+\secrel{List: список <[:]>}
+\secrel{Vector: вектор <:> }
+\secrel{Pair: пара <x:y> }
+\secup
+
+\secrel{Функциональные типы}\label{functional}\secdown
+\secrel{Op: оператор <op:+> }
+\secrel{Fn: встроенная функция <fn:sin> }
+\secrel{Lambda: лямбда-функция <\^\_:\^\_> }
+\secup
+
 \secup
