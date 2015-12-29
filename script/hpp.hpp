@@ -4,8 +4,14 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+#include <cassert>
 #include <vector>
 #include <map>
+#ifdef __MINGW32__
+	#include <direct.h>
+#else
+	#include <sys/stat.h>
+#endif
 										// symbolic class tree
 struct sym {						// === abstract symbolic data type ===
 	std::string tag;					// type/class tag
@@ -22,6 +28,7 @@ struct sym {						// === abstract symbolic data type ===
 	virtual sym* eval();
 	// ----------------------------------- operators
 	virtual sym* at(sym*);				// A @ B = A.at(B)
+	virtual sym* eq(sym*);				// A = B
 	// ----------------------------------- textual object dump
 	std::string dump(int depth=0);		// dump object in tree form
 protected:
@@ -60,10 +67,15 @@ struct Pair:sym { Pair(sym*,sym*); };					// pa:ir
 struct Tuple:sym { Tuple(); };							// tu,ple
 
 													// === functionals ===
-struct Op:sym { Op(std::string); };						// operator
+struct Op:sym { Op(std::string); sym*eval(); };			// operator
 struct Lambda:sym { Lambda(); };						// lambda
 typedef sym*(*FN)(sym*);								// function pointer
-struct Fn:sym { Fn(std::string,FN); FN fn; };			// internal function
+struct Fn:sym { Fn(std::string,FN); FN fn; sym*at(sym*); };// internal function
 extern void fn_init();									// glob.functions
+
+// fileio
+
+struct Directory:sym { Directory(sym*o); };
+struct File:sym { File(sym*o); FILE *fh; };
 
 #endif // _H_SCRIPT

@@ -27,12 +27,18 @@ std::string sym::dump(int depth) {							// dump as text tree
 }
 
 sym* sym::eval() {											// eval/compute
-	sym*E = env[val]; if (E) return E;	// glob. lookup
-	return this;						// default: return itself
+	sym*E = env[val]; if (E) return E;				// glob. lookup
+	for (auto it=nest.begin();it!=nest.end();it++)
+		(*it)=(*it)->eval();
+	return this;									// default: return itself
 }
 
-															// operators
-sym* sym::at(sym*o) { push(o); }		// default: move to nest[]ed
+													// ======= operators ======
+sym* sym::at(sym*o) { assert(nest.size()==1);		// default: move to nest[]ed
+	push(o); return this; }		
+sym* sym::eq(sym*o)	{ env[val]=o;					// env[A]=B
+	if (o->tag=="^") o->val=val;					// set name to lambda
+	return o; }
 
 Sym::Sym(std::string V):sym("sym",V)	{}
 
@@ -54,8 +60,33 @@ List::List():sym("[","]") {}
 Vector::Vector():sym("","") {}
 Pair::Pair(sym*A,sym*B):sym(A->val,B->val) { push(A); push(B); }
 
-Op::Op(std::string V):sym("op",V) {}
+Op::Op(std::string V):sym("op",V)	{}
+sym* Op::eval()						{ sym::eval();
+	if (val=="@") { assert(nest.size()==2); return nest[0]->at(nest[1]); }
+	if (val=="=") { assert(nest.size()==2); return nest[0]->eq(nest[1]); }
+	return this;
+}
+
 Lambda::Lambda():sym("^","^") {}
 
-void fn_init() {}
+Fn::Fn(std::string V,FN F):sym("fn",V)	{ fn=F; }
+sym* Fn::at(sym*o)						{ return fn(o); }
+
+// fileio
+
+Directory::Directory(sym*o):sym("dir",o->val) {
+	assert( o->tag=="str");
+#ifdef __MINGW32__
+	mkdir(o->val.c_str());
+#else
+	mkdir(o->val.c_str(),0700);
+#endif
+}
+
+sym* dir(sym*o) { return new Directory(o); }
+
+void fn_init() {
+	// fileio
+	env["dir"] = new Fn("dir",dir);
+}
 
