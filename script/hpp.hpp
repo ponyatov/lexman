@@ -25,6 +25,7 @@ protected:
 	std::string pad(int n);				// pad dump with TABs
 	virtual std::string tagval();		// return "<tag:val>"
 };
+
 															// scalar types
 struct Sym:sym { Sym(std::string); };
 struct Str:sym { Str(std::string); std::string tagval(); };

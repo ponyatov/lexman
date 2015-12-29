@@ -2,10 +2,10 @@
 #include "hpp.hpp"
 %}
 %defines %union { sym*o; }
-%token <o> SYM NUM STR						/* symbol number string */
+%token <o> SYM NUM STR 						/* symbol number string */
 %token <o> EQ ADD SUB MUL DIV POW			/* = + - * / ^ */
 %token <o> LP RP LQ RQ LB RB LL GG COLON	/* ( ) [ ] { } < > : */
-%type  <o> ex list vector 					/* expression [list] <vector> pa:ir */
+%type  <o> ex list vector 					/* expression list vector pa:ir */
 %type  <o> lambda 							/* {lambda} */
 
 %left ADD SUB
@@ -13,7 +13,7 @@
 %left POW
 %left COLON
 %%
-syntax: | syntax ex { W($2); } ;
+syntax: | syntax ex		{ W($2); } ;
 ex: SYM | NUM | STR
 	| LQ list RQ		{ $$=$2; }
 	| LL vector GG		{ $$=$2; }
