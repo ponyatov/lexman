@@ -4,5 +4,5 @@
 syntax match  Comment	"\v#.*"						" # line comment
 syntax match  Constant	"\v[0-9]+"					" number
 syntax region String	start="'" end="'"			" 'string'
-syntax match  Type		"\v[\[\]\(\)\<\>\{\}\:]"	" bracket
-syntax match  Operator	"\v[\+\-\*\/\^]"			" operator
+syntax match  Type		"\v[\[\]\(\)\<\>\{\}\:\=]"	" bracket
+syntax match  Operator	"\v[\+\-\*\/\^\@\.\,]"		" operator

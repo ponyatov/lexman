@@ -35,6 +35,9 @@ N [0-9]+
 \>					TOC(Op,GG)
 \=					TOC(Op,EQ)
 \:					TOC(Op,COLON)
+\@					TOC(Op,AT)
+\.					TOC(Op,DOT)
+\,					TOC(Op,COMMA)
 
 \+					TOC(Op,ADD)
 \-					TOC(Op,SUB)

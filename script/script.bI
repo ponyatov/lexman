@@ -8,3 +8,13 @@
 ]
 ]								# / outer list
 
+# fileio
+next = dir@'next'				# create dir apply with @ operator
+#make = file(next/Makefile)		# create file (apply in C-like form with parens)
+								# create lex.program using functional expression
+								#   multi assignment and string % templating
+#ypp,lpp,hpp,cpp = map(file,
+#	{X:'%s.%s'%(X,X)}@
+#		['ypp','lpp','hpp','cpp']
+#	)
+#next.ls							# file list via . operator 
