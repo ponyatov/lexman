@@ -1,4 +1,2 @@
 @start .
-@gvim -c "colorscheme darkblue" -p lexman.scr lexman.log \
-	ypp.ypp lpp.lpp hpp.hpp cpp.cpp \
-	Makefile
+@gvim -c "colorscheme darkblue" -p lexman.bI lexman.blog ypp.ypp lpp.lpp hpp.hpp cpp.cpp Makefile
