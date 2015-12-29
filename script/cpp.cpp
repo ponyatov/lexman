@@ -39,7 +39,9 @@ sym* sym::at(sym*o) { assert(nest.size()==1);		// default: move to nest[]ed
 sym* sym::eq(sym*o)	{ env[val]=o;					// env[A]=B
 	if (o->tag=="^") o->val=val;					// set name to lambda
 	return o; }
+sym* sym::add(sym*o) { push(o); return this; }		// A+B
 sym* sym::div(sym*o) { push(o); return this; }		// A/B
+sym* sym::addeq(sym*o)	{ return this->eq(this->add(o)); }
 
 Sym::Sym(std::string V):sym("sym",V)	{}
 
@@ -50,6 +52,7 @@ Hex::Hex(std::string V):sym("hex",V)	{}
 Bin::Bin(std::string V):sym("bin",V)	{}
 
 Int::Int(std::string V):sym("int","")	{ i = atoi(V.c_str()); }
+Int::Int(long V):sym("int","")			{ i = V; }
 std::string Int::tagval() {
 	std::ostringstream os; os<<"<"<<tag<<":"<< i <<">"; return os.str(); }
 
@@ -67,6 +70,7 @@ sym* Op::eval()						{ sym::eval();
 	if (val=="@") return nest[0]->at(nest[1]);
 	if (val=="=") return nest[0]->eq(nest[1]);
 	if (val=="/") return nest[0]->div(nest[1]);
+	if (val=="+=") return nest[0]->addeq(nest[1]);
 	return this;
 }
 
@@ -94,7 +98,25 @@ sym* Dir::div(sym*o) {
 sym* dir(sym*o) { return new Dir(o); }
 
 File::File(std::string V):sym("file",V) {
-	assert (fh = fopen(val.c_str(),"w") );
+	assert (fh = fopen(val.c_str(),"rb") );
+}
+
+sym* File::addeq(sym*o) {
+	if (o->tag=="sym") return addeq(new File(o->val));
+	if (o->tag=="file") return File::write(dynamic_cast<File*>(o));
+	return o;
+}
+
+sym* File::write(File*o) {
+	char buf[M4K];
+	long sz=0,rd,wr;
+	rd=fread(buf,sizeof(buf),1,o->fh);
+	std::cerr<<o->val<<"["<<sizeof(buf)<<":"<<rd<<"\n";
+	if (rd) {
+		wr=fwrite(buf,rd,1,fh);
+		sz+=wr; assert(rd==wr);
+	}
+	return new Int(sz);
 }
 
 void fn_init() {

@@ -30,7 +30,9 @@ struct sym {						// === abstract symbolic data type ===
 	// ----------------------------------- operators
 	virtual sym* at(sym*);				// A @ B = A.at(B)
 	virtual sym* eq(sym*);				// A = B
+	virtual sym* add(sym*);				// A + B
 	virtual sym* div(sym*);				// A/B
+	virtual sym* addeq(sym*);			// A += B
 	// ----------------------------------- textual object dump
 	std::string dump(int depth=0);		// dump object in tree form
 protected:
@@ -59,7 +61,8 @@ struct Sym:sym { Sym(std::string); };
 struct Str:sym { Str(std::string); std::string tagval(); };
 struct Hex:sym { Hex(std::string); };
 struct Bin:sym { Bin(std::string); };
-struct Int:sym { Int(std::string); std::string tagval(); long i; };
+struct Int:sym { Int(std::string); std::string tagval(); long i; 
+	Int(long); };
 struct Num:sym { Num(std::string); std::string tagval(); double f; };
 
 													// === composite types ===
@@ -78,6 +81,11 @@ extern void fn_init();									// glob.functions
 // fileio
 
 struct Dir:sym { Dir(sym*o); sym*div(sym*); };
-struct File:sym { File(std::string); File(sym*o); FILE *fh; };
+struct File:sym { File(std::string); File(sym*o); FILE *fh;
+	sym*addeq(sym*);
+	sym* write(File*);
+};
+
+#define M4K 4096
 
 #endif // _H_SCRIPT

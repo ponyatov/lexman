@@ -10,7 +10,11 @@
 
 # fileio
 next = dir@'next'				# create dir apply with @ operator
-next/Makefile
+make = next/Makefile
+make
+make += Makefile
+#file@Makefile # >> make
+
 #make = file(next/Makefile)		# create file (apply in C-like form with parens)
 								# create lex.program using functional expression
 								#   multi assignment and string % templating

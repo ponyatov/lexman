@@ -4,16 +4,19 @@
 %defines %union { sym*o; }
 %token <o> SYM NUM STR 				/* symbol number string */
 %token <o> EQ ADD SUB MUL DIV POW 	/* = + - * / ^ */
+%token <o> ADDEQ					/* += */
 %token <o> AT DOT COMMA COLON		/* @ . , : */
 %token <o> LP RP LQ RQ LB RB LL GG 	/* ( ) [ ] { } < > */
+%token <o> LLLL GGGG				/* << >> */
 %type  <o> ex list vector 			/* expression [list] <vector> pa:ir */
 %type  <o> lambda 					/* {lambda} */
 
+%left EQ ADDEQ
 %left ADD SUB
 %left MUL DIV
 %left POW
 %left COLON
-%left EQ
+%left LLLL GGGG
 %left AT
 %left LP RP
 %%
@@ -29,6 +32,8 @@ ex: SYM | NUM | STR
 	| ex DIV ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex POW ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex EQ ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex ADDEQ ex		{ $$=$2; $$->push($1); $$->push($3); }
+	| ex GGGG ex		{ $$=$2; $$->push($1); $$->push($3); }
 	| ex COLON ex		{ $$=new Pair($1,$3); }
 	| ex AT ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex LP list RP		{ $$=new Op("@"); $$->push($1); $$->push($3); }
