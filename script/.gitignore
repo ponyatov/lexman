@@ -6,3 +6,4 @@ script.exe
 lex.yy.c
 ypp.tab.?pp
 res.res
+next/

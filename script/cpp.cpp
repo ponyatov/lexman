@@ -39,6 +39,7 @@ sym* sym::at(sym*o) { assert(nest.size()==1);		// default: move to nest[]ed
 sym* sym::eq(sym*o)	{ env[val]=o;					// env[A]=B
 	if (o->tag=="^") o->val=val;					// set name to lambda
 	return o; }
+sym* sym::div(sym*o) { push(o); return this; }		// A/B
 
 Sym::Sym(std::string V):sym("sym",V)	{}
 
@@ -62,8 +63,10 @@ Pair::Pair(sym*A,sym*B):sym(A->val,B->val) { push(A); push(B); }
 
 Op::Op(std::string V):sym("op",V)	{}
 sym* Op::eval()						{ sym::eval();
-	if (val=="@") { assert(nest.size()==2); return nest[0]->at(nest[1]); }
-	if (val=="=") { assert(nest.size()==2); return nest[0]->eq(nest[1]); }
+	assert(nest.size()==2);
+	if (val=="@") return nest[0]->at(nest[1]);
+	if (val=="=") return nest[0]->eq(nest[1]);
+	if (val=="/") return nest[0]->div(nest[1]);
 	return this;
 }
 
@@ -74,7 +77,7 @@ sym* Fn::at(sym*o)						{ return fn(o); }
 
 // fileio
 
-Directory::Directory(sym*o):sym("dir",o->val) {
+Dir::Dir(sym*o):sym("dir",o->val) {
 	assert( o->tag=="str");
 #ifdef __MINGW32__
 	mkdir(o->val.c_str());
@@ -83,7 +86,16 @@ Directory::Directory(sym*o):sym("dir",o->val) {
 #endif
 }
 
-sym* dir(sym*o) { return new Directory(o); }
+sym* Dir::div(sym*o) {
+	if (o->tag=="sym") return new File(val+"/"+o->val);
+	abort();
+}
+
+sym* dir(sym*o) { return new Dir(o); }
+
+File::File(std::string V):sym("file",V) {
+	assert (fh = fopen(val.c_str(),"w") );
+}
 
 void fn_init() {
 	// fileio

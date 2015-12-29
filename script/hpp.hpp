@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+#include <cstdio>
 #include <cassert>
 #include <vector>
 #include <map>
@@ -29,6 +30,7 @@ struct sym {						// === abstract symbolic data type ===
 	// ----------------------------------- operators
 	virtual sym* at(sym*);				// A @ B = A.at(B)
 	virtual sym* eq(sym*);				// A = B
+	virtual sym* div(sym*);				// A/B
 	// ----------------------------------- textual object dump
 	std::string dump(int depth=0);		// dump object in tree form
 protected:
@@ -49,10 +51,10 @@ extern void yyerror(std::string);
 #include "ypp.tab.hpp"
 #define TOC(C,X) { yylval.o = new C(yytext); return X; }
 
-extern std::map<std::string,sym*> env;						// glob.environment
+extern std::map<std::string,sym*> env;				// === glob.environment ===
 extern void env_init();
 
-															// scalar types
+													// === scalar types ===
 struct Sym:sym { Sym(std::string); };
 struct Str:sym { Str(std::string); std::string tagval(); };
 struct Hex:sym { Hex(std::string); };
@@ -75,7 +77,7 @@ extern void fn_init();									// glob.functions
 
 // fileio
 
-struct Directory:sym { Directory(sym*o); };
-struct File:sym { File(sym*o); FILE *fh; };
+struct Dir:sym { Dir(sym*o); sym*div(sym*); };
+struct File:sym { File(std::string); File(sym*o); FILE *fh; };
 
 #endif // _H_SCRIPT
