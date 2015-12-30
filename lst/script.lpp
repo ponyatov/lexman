@@ -1,7 +1,7 @@
 %{
 #include <fstream>
 using namespace std;
-ofstream comment("../tmp/bi.comment");
+ofstream comment("../tmp/bi.comment");  int cmntN=0;
 ofstream i("../tmp/bi.int");
 ofstream h("../tmp/bi.hex");
 ofstream b("../tmp/bi.bin");
@@ -11,7 +11,7 @@ ofstream n("../tmp/bi.num");
 S [\-\+]?
 N [0-9]+
 %%
-#[^\n]*\n			{ comment<<yytext; }
+#[^\n]*\n			{ if (cmntN++<5) comment<<yytext; }
 {S}{N}\.{N}			{ n<<yytext<<" "; }
 {S}{N}[eE]{S}{N}	{ n<<yytext<<" "; }
 0x[0-9A-F]+			{ h<<yytext<<" "; }

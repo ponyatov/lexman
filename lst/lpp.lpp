@@ -12,6 +12,7 @@ ofstream i("../tmp/lpp.int");
 ofstream h("../tmp/lpp.hex");
 ofstream b("../tmp/lpp.bin");
 ofstream n("../tmp/lpp.num");
+ofstream o("../tmp/lpp.ops");
 
 %}
 %option main
@@ -32,4 +33,5 @@ ofstream n("../tmp/lpp.num");
 ^0b.+\n					{ num<<yytext; b<<yytext; }
 ^.*numbers.+\n			{ num<<yytext; }
 ^\[.+SYM.+\n			{ sym<<yytext; }
+^.*Op.*\n				{ o<<yytext; }
 %%

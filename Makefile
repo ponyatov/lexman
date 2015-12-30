@@ -5,9 +5,7 @@ TEX += compiler.tex fig/llvm.png
 TEX += lexer.tex regexp.tex tmp/empty.log
 TEX += script/lexer.tex script/lpp.lpp script/lpp.tex
 TEX += script/syntax.tex script/script.bI
-# parser.tex header.tex cppcore.tex
-
-#LST = lst/Makefile lst/mk.lpp
+TEX += parser.tex
 
 MK = tmp/mk.vars
 
