@@ -8,26 +8,15 @@ ofstream i("../tmp/cpp.int");
 ofstream n("../tmp/cpp.num");
 ofstream h("../tmp/cpp.hex");
 ofstream b("../tmp/cpp.bin");
+int par=0;
 %}
 %option main
-%x xx
-%x ii
-%x nn
 %%
-^.*sym::.*\{		{ ssym<<yytext; BEGIN(xx); }
-<xx>\}.*\n		{ ssym<<yytext<<"\n"; BEGIN(INITIAL); }
-<ii>\}.*\n		{ i<<yytext<<"\n"; BEGIN(INITIAL); }
-<nn>\}.*\n		{ n<<yytext<<"\n"; BEGIN(INITIAL); }
-<xx>\n			{ ssym<<yytext; }
-<ii>\n			{ i<<yytext; }
-<nn>\n			{ n<<yytext; }
-<xx>.			{ ssym<<yytext; }
-<ii>.			{ i<<yytext; }
-<nn>.			{ n<<yytext; }
+^.*sym::.*\n	{ ssym<<yytext; }
 ^.*Sym::.*\n	{ sssm<<yytext; }
 ^.*Str::.*\n	{ sstr<<yytext; }
-^.*Int::.*\n	{ i<<yytext; BEGIN(ii); }
-^.*Num::.*\n	{ n<<yytext; BEGIN(nn); }
+^.*Int::.*\n	{ i<<yytext; }
+^.*Num::.*\n	{ n<<yytext; }
 ^.*Hex::.*\n	{ h<<yytext; }
 ^.*Bin::.*\n	{ b<<yytext; }
 %%
