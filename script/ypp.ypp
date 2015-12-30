@@ -15,14 +15,15 @@
 %left ADD SUB
 %left MUL DIV
 %left POW
+%left AT
 %left COLON
 %left LLLL GGGG
-%left AT
 %left LP RP
 %%
 syntax: | syntax ex		{ W($2); W("\n-----------"); 
 	  					  W($2->eval()); W("\n============="); } ;
 ex: SYM | NUM | STR
+  	| LP ex RP			{ $$=$2; }
 	| LQ list RQ		{ $$=$2; }
 	| LL vector GG		{ $$=$2; }
 	| LB lambda RB		{ $$=$2; }

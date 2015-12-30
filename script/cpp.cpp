@@ -34,8 +34,7 @@ sym* sym::eval() {											// eval/compute
 }
 
 													// ======= operators ======
-sym* sym::at(sym*o) { assert(nest.size()==1);		// default: move to nest[]ed
-	push(o); return this; }		
+sym* sym::at(sym*o) { setpar(o); return this; }		// default: set par{}ameter
 sym* sym::eq(sym*o)	{ env[val]=o;					// env[A]=B
 	if (o->tag=="^") o->val=val;					// set name to lambda
 	return o; }
@@ -91,36 +90,51 @@ Dir::Dir(sym*o):sym("dir",o->val) {
 }
 
 sym* Dir::div(sym*o) {
-	if (o->tag=="sym") return new File(val+"/"+o->val);
+	if (o->tag=="sym") { o->val = val+'/'+o->val; return new File(o); }
 	abort();
 }
 
 sym* dir(sym*o) { return new Dir(o); }
 
-File::File(std::string V):sym("file",V) {
-	assert (fh = fopen(val.c_str(),"rb") );
+File::File(std::string V):sym("file",V) { openR(); }
+File::File(sym*o):sym("file",o->val) { if (o->par["W"]) openW(); else openR(); }
+
+void File::openR() {
+	assert (fh = fopen(val.c_str(),"rb") ); par["mode"]=new Sym("R");
+	fseek(fh,0,SEEK_END); par["size"] = new Int(ftell(fh)); rewind(fh);
+}
+
+void File::openW() {
+	assert (fh = fopen(val.c_str(),"wb") ); par["mode"]=new Sym("W");
+	par["size"] = new Int(0);
 }
 
 sym* File::addeq(sym*o) {
 	if (o->tag=="sym") return addeq(new File(o->val));
-	if (o->tag=="file") return File::write(dynamic_cast<File*>(o));
+	if (o->tag=="str") return write(dynamic_cast<Str*>(o));
+	if (o->tag=="file") return write(dynamic_cast<File*>(o));
 	return o;
 }
 
 sym* File::write(File*o) {
-	char buf[M4K];
-	long sz=0,rd,wr;
-	rd=fread(buf,sizeof(buf),1,o->fh);
-	std::cerr<<o->val<<"["<<sizeof(buf)<<":"<<rd<<"\n";
-	if (rd) {
-		wr=fwrite(buf,rd,1,fh);
-		sz+=wr; assert(rd==wr);
-	}
-	return new Int(sz);
+	char buf[ dynamic_cast<Int*>(o->par["size"])->i ];
+	size_t rd = fread(buf,1,sizeof(buf),o->fh); assert(rd>0);
+	size_t wr = fwrite(buf,1,rd,fh); assert(wr>0);
+	dynamic_cast<Int*>(par["size"])->i += wr;
+	return this;
 }
+
+sym* File::write(Str*o) {
+	size_t wr = fwrite(o->val.c_str(),1,o->val.length(),fh); assert(wr>0);
+	dynamic_cast<Int*>(par["size"])->i += wr;
+	return this;
+}
+
+sym* file(sym*o) { return new File(o); }
 
 void fn_init() {
 	// fileio
 	env["dir"] = new Fn("dir",dir);
+	env["file"] = new Fn("file",file);
 }
 

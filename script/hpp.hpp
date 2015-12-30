@@ -84,6 +84,10 @@ struct Dir:sym { Dir(sym*o); sym*div(sym*); };
 struct File:sym { File(std::string); File(sym*o); FILE *fh;
 	sym*addeq(sym*);
 	sym* write(File*);
+	sym* write(Str*);
+protected:
+	void openR();
+	void openW();
 };
 
 #define M4K 4096

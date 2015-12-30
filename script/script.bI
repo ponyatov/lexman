@@ -10,10 +10,11 @@
 
 # fileio
 next = dir@'next'				# create dir apply with @ operator
-make = next/Makefile
-make
+make = next/Makefile@W
 make += Makefile
-#file@Makefile # >> make
+make += file@'lpp.lpp'
+
+#Makefile@R
 
 #make = file(next/Makefile)		# create file (apply in C-like form with parens)
 								# create lex.program using functional expression
