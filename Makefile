@@ -6,6 +6,7 @@ TEX += lexer.tex regexp.tex tmp/empty.log
 TEX += script/lexer.tex script/lpp.lpp script/lpp.tex
 TEX += script/syntax.tex script/script.bI
 TEX += parser.tex
+TEX += script/extensions.tex script/fileio.tex
 
 MK = tmp/mk.vars
 
