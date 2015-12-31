@@ -86,12 +86,18 @@ sym* sym::subst(sym*A,sym*B) {
 	return this;
 }
 
+Lambda::Lambda(Lambda*o) {
+	Lambda *E = new Lambda();
+	return E;
+}
+
 sym* Lambda::at(sym*o)			{
 //	if (par.size()==0) return o;
-	for (auto pr=par.begin();pr!=par.end();pr++)
+	Lambda *E = new Lambda(this);
+	for (auto pr=E->par.begin();pr!=E->par.end();pr++)
 		subst(pr->second,o);
 	//push(o); 
-	return this; }
+	return E; }
 
 Fn::Fn(std::string V,FN F):sym("fn",V)	{ fn=F; }
 sym* Fn::at(sym*o)						{ return fn(o); }
@@ -100,8 +106,7 @@ sym* Fn::at(sym*o)						{ return fn(o); }
 
 sym* map(sym*o) {								// A @ B -> [ A@B.1 A@B.2 ... ]
 	assert(o->nest.size()==2);
-	List*E = new List();
-	sym*A = o->nest[0]; sym*B = o->nest[1];
+	List*E = new List(); sym*A = o->nest[0]; sym*B = o->nest[1];
 	for (auto i=B->nest.begin();i!=B->nest.end();i++)
 		E->push( A->at(*i) );
 	return E;

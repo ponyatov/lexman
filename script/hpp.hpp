@@ -18,6 +18,7 @@ struct sym {						// === abstract symbolic data type ===
 	std::string tag;					// type/class tag
 	std::string val;					// object value in string form
 	sym(std::string,std::string);		// T:V constuctor
+	sym(sym*);							// copy constructor
 	// ----------------------------------- nested objects
 	std::vector<sym*> nest;
 	void push(sym*);					// push to nest[] as stack
@@ -75,7 +76,8 @@ struct Tuple:sym { Tuple(); };							// tu,ple
 
 													// === functionals ===
 struct Op:sym { Op(std::string); sym*eval(); };			// operator
-struct Lambda:sym { Lambda(); sym*at(sym*); };			// lambda
+struct Lambda:sym { Lambda(); Lambda(Lambda*);			// lambda
+	sym*at(sym*); };
 typedef sym*(*FN)(sym*);								// function pointer
 struct Fn:sym { Fn(std::string,FN); FN fn; sym*at(sym*); };// internal function
 extern void fn_init();									// glob.functions
