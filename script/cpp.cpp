@@ -72,6 +72,7 @@ sym* Op::eval()						{ sym::eval();
 	if (val=="/") return nest[0]->div(nest[1]);
 	if (val=="+=") return nest[0]->addeq(nest[1]);
 	if (val==".") return nest[0]->dot(nest[1]);
+	if (val=="+") return nest[0]->add(nest[1]);
 	return this;
 }
 
@@ -86,9 +87,11 @@ sym* sym::subst(sym*A,sym*B) {
 	return this;
 }
 
-Lambda::Lambda(Lambda*o) {
-	Lambda *E = new Lambda();
-	return E;
+Lambda::Lambda(Lambda*o):sym(o->tag,o->val) {
+	for (auto p=o->par.begin();p!=o->par.end();p++)
+		par[p->first] = p->second;
+	for (auto n=o->nest.begin();n!=o->nest.end();n++)
+		push(*n);
 }
 
 sym* Lambda::at(sym*o)			{
