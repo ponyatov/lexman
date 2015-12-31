@@ -34,7 +34,8 @@ sym* sym::eval() {											// eval/compute
 }
 
 													// ======= operators ======
-sym* sym::at(sym*o) { setpar(o); return this; }		// default: return as is
+sym* sym::at(sym*o) { push(o); return this; }		// default: push nest[]ed
+sym* sym::dot(sym*o) { setpar(o); return this; }	// add par{}ameter
 sym* sym::eq(sym*o)	{ env[val]=o;					// env[A]=B
 	if (o->tag=="^") o->val=val;					// set name to lambda
 	return o; }
@@ -70,6 +71,7 @@ sym* Op::eval()						{ sym::eval();
 	if (val=="=") return nest[0]->eq(nest[1]);
 	if (val=="/") return nest[0]->div(nest[1]);
 	if (val=="+=") return nest[0]->addeq(nest[1]);
+	if (val==".") return nest[0]->dot(nest[1]);
 	return this;
 }
 
@@ -93,6 +95,17 @@ sym* Lambda::at(sym*o)			{
 
 Fn::Fn(std::string V,FN F):sym("fn",V)	{ fn=F; }
 sym* Fn::at(sym*o)						{ return fn(o); }
+
+// list processing
+
+sym* map(sym*o) {								// A @ B -> [ A@B.1 A@B.2 ... ]
+	assert(o->nest.size()==2);
+	List*E = new List();
+	sym*A = o->nest[0]; sym*B = o->nest[1];
+	for (auto i=B->nest.begin();i!=B->nest.end();i++)
+		E->push( A->at(*i) );
+	return E;
+}
 
 // fileio
 
@@ -149,6 +162,7 @@ sym* File::write(Str*o) {
 sym* file(sym*o) { return new File(o); }
 
 void fn_init() {
+	env["map"] = new Fn("map",map);
 	// fileio
 	env["dir"] = new Fn("dir",dir);
 	env["file"] = new Fn("file",file);

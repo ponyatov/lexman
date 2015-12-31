@@ -34,6 +34,7 @@ struct sym {						// === abstract symbolic data type ===
 	virtual sym* add(sym*);				// A + B
 	virtual sym* div(sym*);				// A/B
 	virtual sym* addeq(sym*);			// A += B
+	virtual sym* dot(sym*);				// A.B
 	// ----------------------------------- textual object dump
 	std::string dump(int depth=0);		// dump object in tree form
 protected:

@@ -16,7 +16,7 @@
 %left MUL DIV
 %left POW
 %left AT
-%left COLON COMMA
+%left COLON COMMA DOT
 %left LLLL GGGG
 %left LP RP
 %%
@@ -32,6 +32,7 @@ ex: SYM | NUM | STR
 	| ex MUL ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex DIV ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex POW ex			{ $$=$2; $$->push($1); $$->push($3); }
+	| ex DOT ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex EQ ex			{ $$=$2; $$->push($1); $$->push($3); }
 	| ex ADDEQ ex		{ $$=$2; $$->push($1); $$->push($3); }
 	| ex GGGG ex		{ $$=$2; $$->push($1); $$->push($3); }

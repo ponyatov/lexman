@@ -13,12 +13,11 @@
 
 # fileio
 next = dir@'next'				# create dir apply with @ operator
-make = next/Makefile@W
+make = next/Makefile.W
 
 exts = ['ypp','lpp','hpp','cpp','bat']
-{X:X+X}@exts
-{}@exts
-#{X:X+'.'+X}@
+map({X:X+X},exts)
+
 #|
 
 make = next/Makefile@W
