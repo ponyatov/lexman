@@ -1,3 +1,5 @@
+#|
+
 # comment
 [								# \ outer list
 < -01 00 +02 0x12AF:0b1101 >	# < integers, hex : binary > vector, pa:ir 
@@ -24,3 +26,6 @@ make += file@'lpp.lpp'
 #		['ypp','lpp','hpp','cpp']
 #	)
 #next.ls							# file list via . operator 
+
+|#
+

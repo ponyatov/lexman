@@ -5,10 +5,15 @@ std::string StringParseBuffer;
 %option noyywrap
 %option yylineno
 %x stringstate
+%x commentblock
 S [\+\-]?
 N [0-9]+
 %%
-#[^\n]*				{}				/* line comment */
+\#\|				{BEGIN(commentblock);}	/* block comment */
+<commentblock>\|\#	{BEGIN(INITIAL);}
+<commentblock>\n	{}
+<commentblock>.		{}
+#[^\n]*				{}						/* line comment */
 
 '				{BEGIN(stringstate); StringParseBuffer="";}		/* string */
 <stringstate>'	{BEGIN(INITIAL);
