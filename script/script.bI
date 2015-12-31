@@ -9,9 +9,18 @@
 [ {} {X:} {Y:Y} {X:Y: X+Y*A^B}	# lambdas
 ]
 ]								# / outer list
+|#
 
 # fileio
 next = dir@'next'				# create dir apply with @ operator
+make = next/Makefile@W
+
+exts = ['ypp','lpp','hpp','cpp','bat']
+{X:X+X}@exts
+{}@exts
+#{X:X+'.'+X}@
+#|
+
 make = next/Makefile@W
 make += Makefile
 make += file@'lpp.lpp'

@@ -16,7 +16,7 @@
 %left MUL DIV
 %left POW
 %left AT
-%left COLON
+%left COLON COMMA
 %left LLLL GGGG
 %left LP RP
 %%
@@ -40,6 +40,7 @@ ex: SYM | NUM | STR
 	| ex LP list RP		{ $$=new Op("@"); $$->push($1); $$->push($3); }
 ;
 list:					{ $$=new List(); }
+	| list COMMA ex		{ $$=$1; $$->push($3); }
 	| list ex			{ $$=$1; $$->push($2); }
 ;
 vector:					{ $$=new Vector(); }

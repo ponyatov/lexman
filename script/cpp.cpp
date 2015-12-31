@@ -34,7 +34,7 @@ sym* sym::eval() {											// eval/compute
 }
 
 													// ======= operators ======
-sym* sym::at(sym*o) { setpar(o); return this; }		// default: set par{}ameter
+sym* sym::at(sym*o) { setpar(o); return this; }		// default: return as is
 sym* sym::eq(sym*o)	{ env[val]=o;					// env[A]=B
 	if (o->tag=="^") o->val=val;					// set name to lambda
 	return o; }
@@ -73,7 +73,23 @@ sym* Op::eval()						{ sym::eval();
 	return this;
 }
 
-Lambda::Lambda():sym("^","^") {}
+Lambda::Lambda():sym("^","^")	{}
+
+sym* sym::subst(sym*A,sym*B) {
+	for (auto it=nest.begin();it!=nest.end();it++)
+		if ((*it)->val == A->val)
+			(*it) = B;
+		else
+			(*it)->subst(A,B);
+	return this;
+}
+
+sym* Lambda::at(sym*o)			{
+//	if (par.size()==0) return o;
+	for (auto pr=par.begin();pr!=par.end();pr++)
+		subst(pr->second,o);
+	//push(o); 
+	return this; }
 
 Fn::Fn(std::string V,FN F):sym("fn",V)	{ fn=F; }
 sym* Fn::at(sym*o)						{ return fn(o); }

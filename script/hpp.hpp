@@ -27,6 +27,7 @@ struct sym {						// === abstract symbolic data type ===
 	void setpar(sym*);					// set parameter
 	// ----------------------------------- object evaluation
 	virtual sym* eval();
+	virtual sym* subst(sym*,sym*);		// nested replace A->B
 	// ----------------------------------- operators
 	virtual sym* at(sym*);				// A @ B = A.at(B)
 	virtual sym* eq(sym*);				// A = B
@@ -73,7 +74,7 @@ struct Tuple:sym { Tuple(); };							// tu,ple
 
 													// === functionals ===
 struct Op:sym { Op(std::string); sym*eval(); };			// operator
-struct Lambda:sym { Lambda(); };						// lambda
+struct Lambda:sym { Lambda(); sym*at(sym*); };			// lambda
 typedef sym*(*FN)(sym*);								// function pointer
 struct Fn:sym { Fn(std::string,FN); FN fn; sym*at(sym*); };// internal function
 extern void fn_init();									// glob.functions
