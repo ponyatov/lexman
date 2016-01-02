@@ -24,17 +24,17 @@ pdf: lexman.pdf
 LATEX = pdflatex -halt-on-error
 lexman.pdf: $(TEX) $(LST) $(PLOTS)
 	mkdir -p tmp
-	$(LATEX) $< && $(LATEX) $<
+	$(LATEX) lexman && $(LATEX) lexman
 
 .PHONY: clean
 clean:
-	rm -rf *.*log *.out *.toc *.aux
+	rm -rf *.*log *.out *.toc *.aux *.idx
 
 #$(LST): lst/Makefile lst/mk.lpp lst/Fi.lpp lst/empty.lpp script/Makefile
 #	cd lst && $(MAKE) EXE=$(EXE)
 
-fig/%.png: fig/%.dot
-	dot -Tpng -o $@ $<
+#fig/%.png: fig/%.dot
+#	dot -Tpng -o $@ $<
 ##fig/%.pdf: fig/%.svg
 ##	inkscape --file=$< --export-area-drawing --without-gui --export-pdf=$@
 #

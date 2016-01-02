@@ -17,6 +17,11 @@
 деревья разбора.
 \end{framed}
 
+ANTLR\ --- генератор парсеров, позволяющий автоматически создавать
+программу-парсер (как и лексический анализатор) на одном из целевых языков
+программирования (\cpp, \java, \cs, \py, Ruby) по описанию LL(*)-грамматики 
+на языке, близком к РБНФ.
+
 \secrel{Инсталяция}\secdown
 
 \secrel{Java JDK}
@@ -59,7 +64,18 @@ Android Studio \ref{adkinstall}.
 \begin{verbatim}
 cd \Java ; mkdir ANTLR ; cd ANTLR
 wget -c http://www.antlr.org/download/antlr-4.5.1-complete.jar
+wget -c 
 \end{verbatim}
+
+Установите \href{http://tunnelvisionlabs.com/products/demo/antlrworks}{ANTLRWorks},
+распаковав \file{.zip}\ в \verb|C:\Java\ANTLR\|.
+\bigskip
+
+Если вы работаете в \eclipse, 
+\href{https://github.com/jknack/antlr4ide}{плагин Edgar Espina}
+доступен для установки через \eclipse\ Marketplace под именем
+ANTLR 4 IDE в комплекте с самой библиотекой ANTLR, устанавливаемой как плагин.
+\bigskip
 
 Установите переменные окружения для пользователя \verb|CLASSPATH|\note{не 
 забудьте про точку .;}\ и добавьте в \verb|PATH|:
@@ -80,6 +96,23 @@ java org.antlr.v4.gui.TestRig %*
 
 \secrel{Android Studio}\label{adkinstall}
 
+\url{http://developer.android.com/intl/ru/sdk/index.html}\bigskip
+
+\menu{All Android Studio Packages>Windows>android-studio-bundle-xxx.xxx-windows.exe}
+
+\bigskip
+Bundle включает не только IDE на базе IntelliJava, но и Android SDK.
+
 \secup
+
+\secrel{Необходимый инструментарий}
+
+\begin{itemize}[nosep]
+\item \prog{ANTLRWorks} --- среда для разработки и отладки грамматик
+\item \prog{ANTLR}\ --- собственно сам ANTLR
+\item \prog{Antlr4.Runtime.dll} \cs\ runtime distribution\ -- .NET библиотека 
+для работы со сгенирированными анализаторами, входит в пакет 
+\file{antlr-csharp-runtime-4.x.x.zip}
+\end{itemize}
 
 \secup
