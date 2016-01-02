@@ -1,5 +1,12 @@
 \secrel{\java, \andr, \cs, ANTLR}\secdown
 
+В современных IT-приложениях не всегда возможно использовать язык
+\cpp\ и динамическую компиляцию. Для случаев, когда вы вынуждены использовать
+среды, заточенные под \java\ или .NET/\cs, можно использовать генератор 
+парсеров ANTLR. В этом разделе будет рассмотрен простая языковая 
+среда-калькулятор, рализованная в нескольких вариантах, в т.ч. как приложение
+\andr.
+
 \cp{\cite{anthabr}}
 
 Когда встает вопрос о том, как в программе на \java\ или \cs\ разобрать и 
@@ -114,5 +121,33 @@ Bundle включает не только IDE на базе IntelliJava, но и
 для работы со сгенирированными анализаторами, входит в пакет 
 \file{antlr-csharp-runtime-4.x.x.zip}
 \end{itemize}
+
+\secrel{Разработка грамматики}
+
+Настало время запустить ANTLRWorks и создать проект с грамматикой калькулятора:
+
+\menu{File>New File>ANTLR>ANTLR 4 Combined Grammar>Next}
+
+\menu{Folder>\file{D:/w/lexman/Jcalc}}
+
+\menu{File Name>ANTLRgrammar}
+
+\menu{Finish}
+
+\begin{lstlisting}[title=ANTLRgrammar.g4,language=java]
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+grammar ANTLRgrammar;
+\end{lstlisting}
+
+Тип грамматики Combined Grammar означает, что в одном файле у нас будут 
+находится одновременно и правила лексера, и синтаксического анализатора.
+
+Давайте разберем, как записываются правила для лексера на примере правила
+целого числа \verb|INT|.
 
 \secup
