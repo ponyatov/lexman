@@ -1,2 +1,85 @@
-\secrel{ANTLR}\secdown
+\secrel{\java, \andr, \cs, ANTLR}\secdown
+
+\cp{\cite{anthabr}}
+
+Когда встает вопрос о том, как в программе на \java\ или \cs\ разобрать и 
+вычислить арифметическое выражение, заданное в
+виде привычного инфиксного выражения, можно составить грамматику 
+входного языка, и построить по ней лексический и синтаксический 
+анализатор при помощи \href{http://www.antlr.org/}{ANTLR}.
+
+\begin{framed}
+\term{[AN]other [T]ool for [L]anguage [R]ecognition)}\ --- мощный генератор
+парсеров для чтения, обработки, выполнения и трансляции
+структурированных текстовых или бинарных файлов. \term{ANTLR}\ широко 
+используется для построения языковых утилит или фреймворков. На основе 
+грамматики ANTLR генерирует парсер, который может строить и обходить 
+деревья разбора.
+\end{framed}
+
+\secrel{Инсталяция}\secdown
+
+\secrel{Java JDK}
+
+Для самостоятельного использования платформы \java SE достаточно
+32-битной версии, для разработки под \andr\ современная среда разработки Android 
+Studio \ref{adkinstall}\ требует исключительно 64-битную версию JDK.
+
+\bigskip
+\url{http://www.oracle.com/technetwork/java/javase/downloads/index.html}
+\bigskip
+
+Скачайте и установите \java\ JDK x32/x64:
+
+\menu{Java Platform, Standard Edition>JDK>Download}
+
+\menu{Java SE Development Kit 8u65>Accept License agreement} 
+
+\menu{\win\ x86>jdk-8u65-windows-i586.exe}
+
+\menu{\win\ x64>\textbf{jdk-8u65-windows-x64.exe}}
+
+\bigskip
+После установки JDK нужно прописать несколько переменных окружения для 
+пользователя:
+
+\menu{\winstart>Компьютер>\rms>Свойства>Доп.параметры системы>Переменные среды}
+\begin{verbatim}
+JAVA_HOME = C:\Java\jdk64
+PATH = %JAVA_HOME%\bin;%PATH%
+\end{verbatim}
+
+Переменная \verb|JAVA_HOME|\ необходима для правильной установки
+Android Studio \ref{adkinstall}.
+
+\secrel{ANTLR}
+
+\subsubsection{\win}
+
+\begin{verbatim}
+cd \Java ; mkdir ANTLR ; cd ANTLR
+wget -c http://www.antlr.org/download/antlr-4.5.1-complete.jar
+\end{verbatim}
+
+Установите переменные окружения для пользователя \verb|CLASSPATH|\note{не 
+забудьте про точку .;}\ и добавьте в \verb|PATH|:
+
+\begin{verbatim}
+CLASSPATH = .;C:\Java\ANTLR\antlr-4.5.1-complete.jar;%CLASSPATH%
+PATH = C:\Java\ANTLR;%PATH%
+\end{verbatim}
+
+Cоздайте в \verb|\Java\jdk\bin\|\ пару батников для запуска утилит:
+
+\begin{lstlisting}[title=\file{antlr4.bat}]
+java org.antlr.v4.Tool %*
+\end{lstlisting}
+\begin{lstlisting}[title=\file{grun.bat}]
+java org.antlr.v4.gui.TestRig %*
+\end{lstlisting}
+
+\secrel{Android Studio}\label{adkinstall}
+
+\secup
+
 \secup
