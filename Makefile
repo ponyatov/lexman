@@ -12,6 +12,7 @@ TEX += lexman.tex bib.tex
 #TEX += parser.tex
 #TEX += script/extensions.tex script/fileio.tex
 TEX += antlr.tex
+ANT += tmp/ant.gr tmp/ant.int tmp/ant.id tmp/ant.calc
 
 #MK = tmp/mk.vars
 
@@ -22,7 +23,7 @@ TEX += antlr.tex
 .PHONY: pdf
 pdf: lexman.pdf
 LATEX = pdflatex -halt-on-error
-lexman.pdf: $(TEX) $(LST) $(PLOTS)
+lexman.pdf: $(TEX) $(LST) $(PLOTS) $(ANT)
 	mkdir -p tmp
 	$(LATEX) lexman && $(LATEX) lexman
 
@@ -30,8 +31,15 @@ lexman.pdf: $(TEX) $(LST) $(PLOTS)
 clean:
 	rm -rf *.*log *.out *.toc *.aux *.idx
 
-#$(LST): lst/Makefile lst/mk.lpp lst/Fi.lpp lst/empty.lpp script/Makefile
-#	cd lst && $(MAKE) EXE=$(EXE)
+$(LST): lst/Makefile lst/mk.lpp lst/Fi.lpp lst/empty.lpp script/Makefile
+	cd lst && $(MAKE) EXE=$(EXE)
+
+antlr.tex: $(ANT)
+$(ANT): Jcalc/ANTLRgrammar.g4 Makefile
+	egrep "^grammar" $< > tmp/ant.gr
+	egrep "^(calc|expr|scalar)" $< > tmp/ant.calc
+	egrep "^INT" $< > tmp/ant.int
+	egrep "^ID" $< > tmp/ant.id
 
 #fig/%.png: fig/%.dot
 #	dot -Tpng -o $@ $<
