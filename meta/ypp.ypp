@@ -1,0 +1,11 @@
+%{
+#include "hpp.hpp"
+%}
+%defines %union { sym*o; }
+%token <o> SYM
+%type <o> ex scalar
+%%
+bI: | bI ex { W($2); } ;
+ex: scalar ;
+scalar : SYM ;
+%%
