@@ -19,12 +19,16 @@ sym* sym::eval()			{
 string sym::pad(int n)		{ string S; for (int i=0;i<n;i++) S+="\t"; return S; }
 string sym::tagval()		{ return "<"+tag+":"+val+">"; }
 string sym::dump(int depth)	{ string S = "\n"+pad(depth)+tagval();
+	for (auto pr=par.begin();pr!=par.end();pr++)
+		S+=","+pr->first+":"+pr->second->tagval();
 	for (auto it=nest.begin();it!=nest.end();it++)
 		S+=(*it)->dump(depth+1);
 	return S; }
 
-sym* sym::eq(sym*o)			{ env[val]=o; return o; }	// {B->A;ret B}
-sym* sym::at(sym*o)			{ push(o); return this; }
+sym* sym::eq(sym*o)			{ env[val]=o; return o; }	// =
+sym* sym::comma(sym*o)		{ par[o->val]=o; return this; } // ,
+sym* sym::at(sym*o)			{ return new Op("@@",this,o); }	// @
+sym* sym::div(sym*o)		{ return new Op("//",this,o); }	// /
 
 //////////////////// scalars /////////////////////
 
@@ -36,11 +40,16 @@ Int::Int(string V):sym("int",V) { i = atoi(val.c_str()); }
 
 //////////////////// functionals ////////////////
 
-Op::Op(string V):sym("op",V)		{}
+Op::Op(string V):sym("op",V)				{}
+Op::Op(string V,sym*A,sym*B):sym("op",V)	{ push(A); push(B); }
 sym* Op::eval() {
 	sym::eval();
-	assert(nest.size()==2);
-	if (val=="@") return nest[0]->at(nest[1]);
+	if (nest.size()==2) {
+		if (val=="=") return nest[0]->eq(nest[1]);
+		if (val=="@") return nest[0]->at(nest[1]);
+		if (val==",") return nest[0]->comma(nest[1]);
+		if (val=="/") return nest[0]->div(nest[1]);
+	}
 	return this;
 }
 
@@ -51,7 +60,17 @@ sym* Fn::at(sym*o)					{ return fn(o); }
 
 Dir::Dir(sym*o):sym("dir",o->val) { mkdir(o->val.c_str()); }
 
+sym* Dir::div(sym*o)	{ return new File(this,o); }
+
 sym* dir(sym*o)		{ return new Dir(o); }
+
+File::File(Dir*D,sym*o):sym("file",D->val+'/'+o->val) {
+	if (o->par["W"]) {
+		par["mode"]=o->par["W"]; assert(fh=fopen(val.c_str(),"w"));
+	} else {
+		par["mode"]=o->par["R"]; assert(fh=fopen(val.c_str(),"r"));
+	}
+}
 
 map<string,sym*> env;
 void env_init(){
