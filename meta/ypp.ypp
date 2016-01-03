@@ -2,10 +2,17 @@
 #include "hpp.hpp"
 %}
 %defines %union { sym*o; }
-%token <o> SYM
-%type <o> ex scalar
+%token <o> SYM NUM STR		// symbol number string
+%token <o> EQ AT			// = @
+%type <o> ex scalar op		// expression scalar operator
+
+%left EQ
+%left AT
 %%
-bI: | bI ex { W($2); } ;
-ex: scalar ;
-scalar : SYM ;
+bI: | bI ex { W($2); W("\n-------"); W($2->eval()); W("\n========\n"); } ;
+scalar : SYM | NUM | STR ;
+op : EQ | AT ;
+ex: scalar
+	| ex op ex	{ $$=$2; $$->push($1); $$->push($3); }
+;
 %%

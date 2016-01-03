@@ -1,7 +1,24 @@
 %{
 #include "hpp.hpp"
+string StrBuf;
 %}
 %option noyywrap
 %option yylineno
+%x str
+N	[0-9]+
 %%
+#[^\n]*\n			{}				/* line comment */
+
+'					{BEGIN(str);StrBuf="";}
+<str>'				{BEGIN(INITIAL); yylval.o = new Str(StrBuf); return STR;}
+<str>.				{StrBuf+=yytext;}
+
+{N}					TOC(Int,NUM)
+
+[a-zA-Z0-9_]+		TOC(Sym,SYM)
+
+\=					TOC(Op,EQ)
+\@					TOC(Op,AT)
+
+[ \t\r\n]+			{}
 %%

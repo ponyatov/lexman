@@ -1,7 +1,6 @@
 MODULE = bI
 exec: ./$(MODULE)$(EXE)
-	./$(MODULE)$(EXE) < $(MODULE).bI > $(MODULE).blog &&\
-		tail $(TAIL) $(MODULE).blog
+	./$(MODULE)$(EXE) < $(MODULE).bI > $(MODULE).blog && tail $(TAIL) $(MODULE).blog
 C = cpp.cpp ypp.tab.cpp lex.yy.c
 H = hpp.hpp ypp.tab.hpp
 CFLAGS += -I. -std=gnu++11
